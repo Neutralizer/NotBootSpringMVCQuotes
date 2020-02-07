@@ -15,7 +15,7 @@ import com.model.Quote;
 import com.service.QuoteService;
 
 /**
- * Quote controller with badic CRUD operations.
+ * Quote controller with basic CRUD operations.
  *
  * @author Neutralizer
  */
