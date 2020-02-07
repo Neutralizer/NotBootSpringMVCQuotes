@@ -3,79 +3,73 @@ package com.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.model.Quote;
 import com.service.QuoteService;
 
 /**
- * 
- * get method for /quotes - return all quotes get method for /quotes/{id} -
- * return a specific quote with specific id controller with post method for
- * create quote
+ * Quote controller with badic CRUD operations.
  *
- * read data from a collection make data layer that works with the collection
- * service layer that manipulates the data controller that communicates with the
- * outside world through REST
- * 
  * @author Neutralizer
- *
  */
 
-@Controller
-@ResponseBody
+@RestController
 public class QuoteController {
 
-	@Autowired
-	QuoteService quoteService;
+    @Autowired
+    private QuoteService quoteService;
 
-	@GetMapping(path = "/quotes", produces = "application/json")
-	public List<Quote> getQuotes() {
+    /**
+     * Create quote.
+     */
+    @PostMapping(path = "/quotes", consumes = "application/json")
+    public ResponseEntity createQuote(@RequestBody Quote quote) {
 
-		List<Quote> allQuotes = quoteService.getAllQuotes();
+        quoteService.addQuote(quote);
 
-		return allQuotes;
-	}
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-	@GetMapping(path = "/index")
-	public ModelAndView getIndex() {
+    /**
+     * Get all quotes.
+     */
+    @GetMapping(path = "/quotes", produces = "application/json")
+    public ResponseEntity<List<Quote>> getQuotes() {
 
-		ModelAndView modelAndView = new ModelAndView("index");
+        List<Quote> allQuotes = quoteService.getAllQuotes();
 
-		modelAndView.addObject("quote", "ooooooooooooooo");
+        return new ResponseEntity<>(allQuotes, HttpStatus.OK);
+    }
 
-		return modelAndView;
-	}
-	
-	@GetMapping(path = "/")
-	public ModelAndView getP() {
+    /**
+     * Get quote by id.
+     */
+    @GetMapping(path = "/quotes/{id}")
+    public Quote getQuote(@PathVariable int id) {
 
-		ModelAndView modelAndView = new ModelAndView("index", "quote", "start");
+        Quote quote = quoteService.getQuote(id);
 
-		return  modelAndView;
-	}
+        return quote;
 
-	@GetMapping(path = "/quotes/{id}") 
-	public Quote getQuote(@PathVariable int id, Model model) {
+    }
 
-		Quote quote = quoteService.getQuote(id);
+    /**
+     * Delete quote by id.
+     */
+    @GetMapping(path = "/quotes/{id}")
+    public ResponseEntity deleteQuote(@PathVariable int id) {
 
-		return quote;
+        quoteService.remove(id);
 
-	}
+        return new ResponseEntity<>(HttpStatus.OK);
 
-	@PostMapping(path = "/quotes", consumes = "application/json")
-	public void createQuote(@RequestBody Quote quote) {
-
-		quoteService.addQuote(quote);
-
-	}
+    }
 
 }
