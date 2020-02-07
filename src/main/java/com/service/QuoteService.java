@@ -17,7 +17,7 @@ public class QuoteService {
         quotes.add(new Quote(1, "It's over 9000!!!"));
         quotes.add(new Quote(2, "I will defend my nakama!"));
         quotes.add(new Quote(3, "I smell meat!"));
-        quotes.add(new Quote(4, "Kage bunshin no jitsu"));
+        quotes.add(new Quote(4, "Omae wa mou shindeiru!"));
         quotes.add(new Quote(5, "I will be the pirate king!"));
 
     }
