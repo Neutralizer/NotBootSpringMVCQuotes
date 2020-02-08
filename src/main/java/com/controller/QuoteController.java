@@ -64,7 +64,7 @@ public class QuoteController {
     /**
      * Delete quote by id.
      */
-    @GetMapping(path = "/quotes/{id}")
+    @DeleteMapping(path = "/quotes/{id}")
     public ResponseEntity deleteQuote(@PathVariable int id) { //TODO was getmapping - check test
 
         quoteService.remove(id);

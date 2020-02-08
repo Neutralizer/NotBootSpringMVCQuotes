@@ -17,30 +17,25 @@ import com.service.QuoteService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 class TestService {
-	
-
 
 	private QuoteService quoteService = new QuoteService();
 	private QuoteRepository quoteRepository = new QuoteRepository();
-	
-
 
 	@BeforeEach
 	public void setUp() throws Exception {
 		ReflectionTestUtils.setField(quoteService, "quoteRepository", quoteRepository);
-	}
-	
-
-	@Test
-	public void getAllQuotesLength() {
-		List<Quote> allQuotes = quoteService.getAllQuotes();
-		assertEquals(allQuotes.size(), 5);
 	}
 
 	@Test
 	public void getAllQuotesNotNull() {
 		List<Quote> allQuotes = quoteService.getAllQuotes();
 		assertNotNull(allQuotes);
+	}
+
+	@Test
+	public void getAllQuotesLength() {
+		List<Quote> allQuotes = quoteService.getAllQuotes();
+		assertEquals(allQuotes.size(), 5);
 	}
 
 	@Test
