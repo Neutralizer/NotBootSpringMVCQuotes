@@ -35,7 +35,7 @@ public class QuoteService {
      * 
      * Retrieves quote by its id. Not zero based.
      * 
-     * @param id The id of the quote.
+     * @param id The id of the quote
      * @return
      */
     public Quote getQuote(int id) {
@@ -44,7 +44,7 @@ public class QuoteService {
 
     /**
      * Adds quote to repo.
-     * @param quote The quote to be added.
+     * @param quote The quote to be added
      */
     public void addQuote(Quote quote) {
     	quoteRepository.add(quote);
@@ -52,7 +52,7 @@ public class QuoteService {
 
     /**
      * Removes quote by id.
-     * @param id The id of quote to be removed.
+     * @param id The id of quote to be removed
      */
     public void remove(int id) {
     	quoteRepository.remove(id);

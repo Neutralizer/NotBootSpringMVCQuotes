@@ -29,7 +29,7 @@ public class QuoteRepository {
 	/**
 	 * Retrieve all quotes.
 	 * 
-	 * @return All quotes.
+	 * @return All quotes
 	 */
 	public List<Quote> getAllQuotes() {
 		return quotes;
@@ -39,7 +39,7 @@ public class QuoteRepository {
 	 * Get single quote when provided with its id. 
 	 * Not zero based. 
 	 * @param id
-	 *            The id of the quote.
+	 *            The id of the quote
 	 * @return
 	 */
 	public Quote get(int id) {
@@ -51,7 +51,7 @@ public class QuoteRepository {
 	 * Adds quote to repository.
 	 * 
 	 * @param quote
-	 *            The quote to be added.
+	 *            The quote to be added
 	 */
 	public void add(Quote quote) {
 		quotes.add(quote);
@@ -61,7 +61,7 @@ public class QuoteRepository {
 	 * Removes the quote with the given id.
 	 * 
 	 * @param id
-	 *            The id of the quote to be removed.
+	 *            The id of the quote to be removed
 	 */
 	public void remove(int id) {
 		quotes.remove(id);
