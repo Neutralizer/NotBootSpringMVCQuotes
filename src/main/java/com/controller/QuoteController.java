@@ -30,7 +30,7 @@ public class QuoteController {
     /**
      * Create quote.
      */
-    @PostMapping(path = "/quotes", consumes = "application/json")
+    @PostMapping(path = "/quotes" , consumes = "application/json" )
     public ResponseEntity createQuote(@RequestBody Quote quote) {
 
         quoteService.addQuote(quote);
@@ -65,7 +65,7 @@ public class QuoteController {
      * Delete quote by id.
      */
     @DeleteMapping(path = "/quotes/{id}")
-    public ResponseEntity deleteQuote(@PathVariable int id) { //TODO was getmapping - check test
+    public ResponseEntity deleteQuote(@PathVariable int id) {
 
         quoteService.remove(id);
 
