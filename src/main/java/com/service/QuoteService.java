@@ -19,6 +19,12 @@ public class QuoteService {
         return quoteRepository.getAllQuotes();
     }
 
+    /**
+     * zero based
+     * 
+     * @param id
+     * @return
+     */
     public Quote getQuote(int id) {
         return quoteRepository.get(id);
     }
