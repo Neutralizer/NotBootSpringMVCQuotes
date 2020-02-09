@@ -45,7 +45,6 @@ class TestController {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(quoteController).build();
 	}
 
-
 	@Test
 	public void getAllQuotes() throws Exception {
 
@@ -66,34 +65,32 @@ class TestController {
 
 		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si"));
 
-		mockMvc.perform(get("/quotes/{id}",id)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(content().string(containsString("si")))
-				.andExpect(content().string(containsString("1"))).andReturn();
+		mockMvc.perform(get("/quotes/{id}", id)).andDo(print())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().string(containsString("si"))).andExpect(content().string(containsString("1")))
+				.andReturn();
 
 	}
 
 	@Test
 	public void deleteSingleQuote() throws Exception {
-		mockMvc.perform(delete("/quotes/{id}",1)).andExpect(status().isOk());
+		mockMvc.perform(delete("/quotes/{id}", 1)).andExpect(status().isOk());
 
 	}
-	
 
-	 @Test
-	 public void postQuoteTest() throws Exception {
-	 Quote quote = new Quote(6,"baobab");
-	 
-	 Gson gson = new Gson();
-	 String json = gson.toJson(quote);
+	@Test
+	public void postQuoteTest() throws Exception {
+		Quote quote = new Quote(6, "baobab");
 
-	 MockHttpServletRequestBuilder request = post("/quotes");
-	 request.content(json);
-	 request.accept(MediaType.APPLICATION_JSON);
-	 request.contentType(MediaType.APPLICATION_JSON);
-	 mockMvc.perform(request)
-	     .andDo(print())
-	     .andExpect(status().isOk());
-	 
-	 }
+		Gson gson = new Gson();
+		String json = gson.toJson(quote);
+
+		MockHttpServletRequestBuilder request = post("/quotes");
+		request.content(json);
+		request.accept(MediaType.APPLICATION_JSON);
+		request.contentType(MediaType.APPLICATION_JSON);
+		mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
+
+	}
 
 }
