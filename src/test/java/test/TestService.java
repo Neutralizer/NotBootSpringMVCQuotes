@@ -78,7 +78,7 @@ class TestService {
 	}
 
 	/**
-	 * get is 0 based
+	 * 
 	 */
 	@Test
 	public void addQuoteAndCheckString() {
