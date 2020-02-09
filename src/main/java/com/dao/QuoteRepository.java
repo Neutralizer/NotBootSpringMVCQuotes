@@ -37,7 +37,7 @@ public class QuoteRepository {
 
 	/**
 	 * Get single quote when provided with its id. 
-	 * Not zero based.
+	 * Not zero based. 
 	 * @param id
 	 *            The id of the quote.
 	 * @return
