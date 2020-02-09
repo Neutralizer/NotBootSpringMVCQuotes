@@ -35,7 +35,11 @@ public class QuoteService {
      * 
      * Retrieves quote by its id. Not zero based.
      * 
+<<<<<<< HEAD
      * @param id The id of the quote
+=======
+     * @param id The id of the quote.
+>>>>>>> branch 'commentsUpdateBranch' of https://github.com/Neutralizer/QuoteManipulator.git
      * @return
      */
     public Quote getQuote(int id) {
@@ -44,7 +48,11 @@ public class QuoteService {
 
     /**
      * Adds quote to repo.
+<<<<<<< HEAD
      * @param quote The quote to be added
+=======
+     * @param quote The quote to be added.
+>>>>>>> branch 'commentsUpdateBranch' of https://github.com/Neutralizer/QuoteManipulator.git
      */
     public void addQuote(Quote quote) {
     	quoteRepository.add(quote);
@@ -52,7 +60,11 @@ public class QuoteService {
 
     /**
      * Removes quote by id.
+<<<<<<< HEAD
      * @param id The id of quote to be removed
+=======
+     * @param id The id of quote to be removed.
+>>>>>>> branch 'commentsUpdateBranch' of https://github.com/Neutralizer/QuoteManipulator.git
      */
     public void remove(int id) {
     	quoteRepository.remove(id);

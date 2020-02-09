@@ -29,7 +29,11 @@ public class QuoteRepository {
 	/**
 	 * Retrieve all quotes.
 	 * 
+<<<<<<< HEAD
 	 * @return All quotes
+=======
+	 * @return All quotes.
+>>>>>>> branch 'commentsUpdateBranch' of https://github.com/Neutralizer/QuoteManipulator.git
 	 */
 	public List<Quote> getAllQuotes() {
 		return quotes;
