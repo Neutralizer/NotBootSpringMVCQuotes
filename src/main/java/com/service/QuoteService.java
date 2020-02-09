@@ -8,6 +8,14 @@ import org.springframework.stereotype.Service;
 import com.dao.QuoteRepository;
 import com.model.Quote;
 
+
+/**
+ * 
+ * QuoteService class for accessing the dao layer.
+ * 
+ * @author Neutralizer
+ *
+ */
 @Service
 public class QuoteService {
 
@@ -15,12 +23,13 @@ public class QuoteService {
     QuoteRepository quoteRepository;
 
 
+	
     public List<Quote> getAllQuotes() {
         return quoteRepository.getAllQuotes();
     }
 
     /**
-     * zero based
+     * 
      * 
      * @param id
      * @return

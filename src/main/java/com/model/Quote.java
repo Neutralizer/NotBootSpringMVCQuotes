@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 
 /**
- * POJO quote class - the actual quotes
+ * POJO quote class - the actual quotes.
  * 
  * @author Neutralizer
  *
