@@ -52,13 +52,13 @@ class TestService {
 	
 	@Test
 	public void getQuoteCheckString() {
-		Quote quote = quoteService.getQuote(2);
+		Quote quote = quoteService.getQuote(3);
 		org.hamcrest.MatcherAssert.assertThat(quote.getQuote(), containsString("meat"));
 	}
 	
 	@Test
 	public void getQuoteCheckId() {
-		Quote quote = quoteService.getQuote(3);
+		Quote quote = quoteService.getQuote(4);
 		assertEquals(quote.getId(), 4);
 	}
 	
@@ -76,12 +76,15 @@ class TestService {
 		List<Quote> allQuotes = quoteService.getAllQuotes();
 		assertEquals(allQuotes.size(), 6);
 	}
-	
+
+	/**
+	 * get is 0 based
+	 */
 	@Test
 	public void addQuoteAndCheckString() {
 		Quote quote = new Quote(6, "yare yare daze");
 		quoteService.addQuote(quote);
-		Quote quote2 = quoteService.getQuote(5);
+		Quote quote2 = quoteService.getQuote(6);
 		org.hamcrest.MatcherAssert.assertThat(quote2.getQuote(), containsString("daze"));
 	}
 
