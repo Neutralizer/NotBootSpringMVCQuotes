@@ -6,12 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.GsonBuilderUtils;
-import org.springframework.http.converter.json.GsonFactoryBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -28,7 +25,6 @@ import static org.mockito.Mockito.when;
 import static org.hamcrest.core.StringContains.containsString;
 
 import com.controller.QuoteController;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.google.gson.Gson;
 import com.model.Quote;
 import com.service.QuoteService;
@@ -90,18 +86,10 @@ class TestController {
 	 Gson gson = new Gson();
 	 String json = gson.toJson(quote);
 
-//	 mockMvc.perform(post("/quotes")
-//			 .characterEncoding("UTF-8")
-//			 .content(json).acce)
-//	 .andDo(print())
-////	 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//	 .andExpect(status().isOk());
-	 
-	 MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json", java.nio.charset.Charset.forName("UTF-8"));
 	 MockHttpServletRequestBuilder request = post("/quotes");
 	 request.content(json);
-	 request.accept(MEDIA_TYPE_JSON_UTF8);
-	 request.contentType(MEDIA_TYPE_JSON_UTF8);
+	 request.accept(MediaType.APPLICATION_JSON);
+	 request.contentType(MediaType.APPLICATION_JSON);
 	 mockMvc.perform(request)
 	     .andDo(print())
 	     .andExpect(status().isOk());
