@@ -7,6 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import com.model.Quote;
 
+
+/**
+ * Temp repository class
+ * 
+ * @author Neutralizer
+ *
+ */
 @Repository
 public class QuoteRepository {
 	

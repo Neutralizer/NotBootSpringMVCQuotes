@@ -76,7 +76,10 @@ class TestService {
 		List<Quote> allQuotes = quoteService.getAllQuotes();
 		assertEquals(allQuotes.size(), 6);
 	}
-	
+
+	/**
+	 * get is 0 based
+	 */
 	@Test
 	public void addQuoteAndCheckString() {
 		Quote quote = new Quote(6, "yare yare daze");
