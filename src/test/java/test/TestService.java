@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -78,7 +77,7 @@ class TestService {
 	}
 
 	/**
-	 * get is 0 based
+	 * 
 	 */
 	@Test
 	public void addQuoteAndCheckString() {
