@@ -1,7 +1,10 @@
 package test;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.hamcrest.core.StringContains.containsString;
 
 import java.util.List;
 
@@ -45,6 +48,41 @@ class TestService {
 	public void getQuoteNotNull() {
 		Quote quote = quoteService.getQuote(2);
 		assertNotNull(quote);
+	}
+	
+	@Test
+	public void getQuoteCheckString() {
+		Quote quote = quoteService.getQuote(2);
+		org.hamcrest.MatcherAssert.assertThat(quote.getQuote(), containsString("meat"));
+	}
+	
+	@Test
+	public void getQuoteCheckId() {
+		Quote quote = quoteService.getQuote(3);
+		assertEquals(quote.getId(), 4);
+	}
+	
+	@Test
+	public void removeQuote() {
+		quoteService.remove(4);
+		List<Quote> allQuotes = quoteService.getAllQuotes();
+		assertEquals(allQuotes.size(), 4);
+	}
+	
+	@Test
+	public void addQuote() {
+		Quote quote = new Quote(6, "yare yare daze");
+		quoteService.addQuote(quote);
+		List<Quote> allQuotes = quoteService.getAllQuotes();
+		assertEquals(allQuotes.size(), 6);
+	}
+	
+	@Test
+	public void addQuoteAndCheckString() {
+		Quote quote = new Quote(6, "yare yare daze");
+		quoteService.addQuote(quote);
+		Quote quote2 = quoteService.getQuote(5);
+		org.hamcrest.MatcherAssert.assertThat(quote2.getQuote(), containsString("daze"));
 	}
 
 }
