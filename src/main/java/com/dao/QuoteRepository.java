@@ -29,7 +29,7 @@ public class QuoteRepository {
 	/**
 	 * Retrieve all quotes.
 	 * 
-	 * @return List of all quotes.
+	 * @return All quotes.
 	 */
 	public List<Quote> getAllQuotes() {
 		return quotes;
