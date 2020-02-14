@@ -6,7 +6,7 @@
 
 1) Created pure spring MVC project with controller and service layer 
 2) Added dao layer with hardcoded data
-3) Added CRUD endpoint controller methods
+3) Added CRUD request handling controller methods
 4) Added service layer integration testing using reflection and dependency injection 
 5) Added controller layer integration testing with MockMVC and Mockito 
 6) Added class level documentation
