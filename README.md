@@ -1,8 +1,8 @@
-# QuoteManipulator - 
+# QuoteManipulator
 
 ## Test spring project that displays quotes 
 
-### Lifecycle:
+### Program evolution stages:
 
 1) Created pure spring MVC project with controller and service layer 
 2) Added dao layer with hardcoded data
