@@ -20,7 +20,7 @@ import com.model.Quote;
 public class QuoteService {
 
 	@Autowired
-    QuoteRepository quoteRepository;
+    private QuoteRepository quoteRepository;
 
 
 	/**
