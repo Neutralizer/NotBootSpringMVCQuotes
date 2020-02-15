@@ -11,4 +11,4 @@
 5) Added controller layer integration testing with MockMVC and Mockito 
 6) Added class level documentation
 7) Converted pure spring MVC project to spring boot project
-8) Added spring boot starter actuator endpoint (http://localhost:8080/actuator/health ; Sensitive endpoints disabled if web security is not enabled
+8) Added spring boot starter actuator endpoint (http://localhost:8080/actuator/health ; Sensitive endpoints disabled if web security is not enabled)
