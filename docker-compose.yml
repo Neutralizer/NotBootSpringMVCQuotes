@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  springboot-docker-compose-app-container:
+    image: neutralizer-test/quote-manipulator-dockerize-maven:1.0
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
