@@ -13,4 +13,4 @@
 7) Converted pure spring MVC project to spring boot project
 8) Added spring boot starter actuator endpoint (http://localhost:8080/actuator/health ; Sensitive endpoints disabled if web security is not enabled)
 9) Switched to intellij IDE in linux virtual machine
-10) Added dockerfile and docker-compose.yml file - successful dockerizing
+10) Added Dockerfile and docker-compose.yml file - successful dockerizing
