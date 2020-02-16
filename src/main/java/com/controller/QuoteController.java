@@ -28,7 +28,7 @@ public class QuoteController {
     private QuoteService quoteService;
 
     /**
-     * Create quote.
+     * Create quote. Test
      */
     @PostMapping(path = "/quotes" , consumes = "application/json" )
     public ResponseEntity createQuote(@RequestBody Quote quote) {
