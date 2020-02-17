@@ -40,7 +40,7 @@ public class QuoteRepository {
 	 * Not zero based. 
 	 * @param id
 	 *            The id of the quote
-	 * @return
+	 * @return The quote
 	 */
 	public Quote get(int id) {
 		if (id < 1) throw new IllegalArgumentException("index can't be 0 or negative");
@@ -67,11 +67,19 @@ public class QuoteRepository {
 		quotes.remove(id);
 	}
 
+	/**
+	 * Adds 1 rating point to the quote with the given id
+	 * @param quoteId The id of the quote, that will have its rating field increased by 1
+	 */
 	public void addRating(int quoteId) {
 		Quote quote = get(quoteId);
 		quote.setRating(quote.getRating() + 1);
 	}
 
+	/**
+	 * Removes 1 rating point from the quote with the given id
+	 * @param quoteId The id of the quote, that will have its rating field decreased by 1
+	 */
 	public void removeRating(int quoteId) {
 		Quote quote = get(quoteId);
 		quote.setRating(quote.getRating() - 1);
