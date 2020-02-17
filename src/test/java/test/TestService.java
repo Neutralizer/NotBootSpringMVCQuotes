@@ -76,9 +76,6 @@ class TestService {
 		assertEquals(allQuotes.size(), 6);
 	}
 
-	/**
-	 * 
-	 */
 	@Test
 	public void addQuoteAndCheckString() {
 		Quote quote = new Quote(6, "yare yare daze","Me",0);
@@ -86,5 +83,32 @@ class TestService {
 		Quote quote2 = quoteService.getQuote(6);
 		org.hamcrest.MatcherAssert.assertThat(quote2.getQuote(), containsString("daze"));
 	}
+
+	@Test
+	public void addLikeToQuote() {
+		Quote quote = new Quote(6, "oh no!","Me",0);
+		quoteService.addQuote(quote);
+		quoteService.addRating(6);
+		assertEquals(quoteService.getQuote(6).getRating(), 1);
+	}
+
+	@Test
+	public void addDislikeToQuote() {
+		Quote quote = new Quote(6, "oh no!","Me",0);
+		quoteService.addQuote(quote);
+		quoteService.removeRating(6);
+		assertEquals(quoteService.getQuote(6).getRating(), -1);
+	}
+
+	@Test
+	public void addLikeAndDislikeToQuote() {
+		Quote quote = new Quote(6, "oh no!","Me",0);
+		quoteService.addQuote(quote);
+		quoteService.removeRating(6);
+		quoteService.addRating(6);
+		assertEquals(quoteService.getQuote(6).getRating(), 0);
+	}
+
+
 
 }
