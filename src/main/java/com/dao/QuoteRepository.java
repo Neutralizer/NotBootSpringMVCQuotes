@@ -16,14 +16,14 @@ import com.model.Quote;
 @Repository
 public class QuoteRepository {
 
-	private List<Quote> quotes = new ArrayList<Quote>();
+	private List<Quote> quotes = new ArrayList<>();
 
 	public QuoteRepository() {
-		quotes.add(new Quote(1, "It's over 9000!!!"));
-		quotes.add(new Quote(2, "I will defend my nakama!"));
-		quotes.add(new Quote(3, "I smell meat!"));
-		quotes.add(new Quote(4, "Omae wa mou shindeiru!"));
-		quotes.add(new Quote(5, "I will be the pirate king!"));
+		quotes.add(new Quote(1, "It's over 9000!!!", "Vegeta",0));
+		quotes.add(new Quote(2, "I will defend my nakama!", "Luffy",0));
+		quotes.add(new Quote(3, "I smell meat!", "Luffy",0));
+		quotes.add(new Quote(4, "Omae wa mou shindeiru!","Kenshiro",0));
+		quotes.add(new Quote(5, "I will be the pirate king!","Luffy",0));
 	}
 
 	/**
@@ -67,4 +67,13 @@ public class QuoteRepository {
 		quotes.remove(id);
 	}
 
+	public void addRating(int quoteId) {
+		Quote quote = get(quoteId);
+		quote.setRating(quote.getRating() + 1);
+	}
+
+	public void removeRating(int quoteId) {
+		Quote quote = get(quoteId);
+		quote.setRating(quote.getRating() - 1);
+	}
 }

@@ -57,4 +57,12 @@ public class QuoteService {
     	quoteRepository.remove(id);
     }
 
+    public void addRating(int id){
+        quoteRepository.addRating(id);
+    }
+
+    public void removeRating(int id){
+        quoteRepository.removeRating(id);
+    }
+
 }

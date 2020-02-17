@@ -40,7 +40,7 @@ class TestService {
 	@Test
 	public void getAllQuotesFirstQuote() {
 		List<Quote> allQuotes = quoteService.getAllQuotes();
-		assertEquals(allQuotes.get(0), new Quote(1, "It's over 9000!!!"));
+		assertEquals(allQuotes.get(0), new Quote(1, "It's over 9000!!!","Vegeta",0));
 	}
 
 	@Test
@@ -70,7 +70,7 @@ class TestService {
 	
 	@Test
 	public void addQuote() {
-		Quote quote = new Quote(6, "yare yare daze");
+		Quote quote = new Quote(6, "yare yare daze","Me",0);
 		quoteService.addQuote(quote);
 		List<Quote> allQuotes = quoteService.getAllQuotes();
 		assertEquals(allQuotes.size(), 6);
@@ -81,7 +81,7 @@ class TestService {
 	 */
 	@Test
 	public void addQuoteAndCheckString() {
-		Quote quote = new Quote(6, "yare yare daze");
+		Quote quote = new Quote(6, "yare yare daze","Me",0);
 		quoteService.addQuote(quote);
 		Quote quote2 = quoteService.getQuote(6);
 		org.hamcrest.MatcherAssert.assertThat(quote2.getQuote(), containsString("daze"));

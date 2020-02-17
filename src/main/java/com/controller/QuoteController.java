@@ -28,7 +28,7 @@ public class QuoteController {
     private QuoteService quoteService;
 
     /**
-     * Create quote. Test
+     * Create quote.
      */
     @PostMapping(path = "/quotes" , consumes = "application/json" )
     public ResponseEntity createQuote(@RequestBody Quote quote) {
@@ -71,6 +71,36 @@ public class QuoteController {
 
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    /**
+     * Adds one like to the quote with the specified id
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(path = "/quotes/{id}/like")
+    public ResponseEntity likeQuote(@PathVariable int id){
+        //add 1 like to quote rating
+        //get the quote current rating
+        quoteService.addRating(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Removes one like to the quote with the specified id
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(path = "/quotes/{id}/dislike")
+    public ResponseEntity dislikeQuote(@PathVariable int id){
+        //remove 1 like to quote rating
+        //get the quote current rating
+        quoteService.removeRating(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

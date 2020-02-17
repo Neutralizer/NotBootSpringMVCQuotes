@@ -49,21 +49,21 @@ class TestController {
 	public void getAllQuotes() throws Exception {
 
 		ArrayList<Quote> allQuotes = new ArrayList<Quote>();
-		allQuotes.add(new Quote(1, "da"));
-		allQuotes.add(new Quote(2, "bo"));
+		allQuotes.add(new Quote(1, "da","Me",0));
+		allQuotes.add(new Quote(2, "bo","Me",0));
 
 		when(quoteService.getAllQuotes()).thenReturn((List<Quote>) allQuotes);
 
 		mockMvc.perform(get("/quotes")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().string(containsString("da")))
-				.andExpect(content().string(containsString("2")));
+				.andExpect(content().string(containsString("2")));//TODO add author check
 	}
 
 	@Test
 	public void getSingleQuote() throws Exception {
 		int id = 1;
 
-		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si"));
+		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si","Me",0));
 
 		mockMvc.perform(get("/quotes/{id}", id)).andDo(print())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -80,7 +80,7 @@ class TestController {
 
 	@Test
 	public void postQuoteTest() throws Exception {
-		Quote quote = new Quote(6, "baobab");
+		Quote quote = new Quote(6, "baobab","Me",0);
 
 		Gson gson = new Gson();
 		String json = gson.toJson(quote);
