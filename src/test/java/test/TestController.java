@@ -48,11 +48,11 @@ class TestController {
 	@Test
 	public void getAllQuotes() throws Exception {
 
-		ArrayList<Quote> allQuotes = new ArrayList<Quote>();
+		ArrayList<Quote> allQuotes = new ArrayList<>();
 		allQuotes.add(new Quote(1, "da","Me",0));
 		allQuotes.add(new Quote(2, "bo","Him",25));
 
-		when(quoteService.getAllQuotes()).thenReturn((List<Quote>) allQuotes);
+		when(quoteService.getAllQuotes()).thenReturn(allQuotes);
 
 		mockMvc.perform(get("/quotes")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().string(containsString("da")))
@@ -97,5 +97,17 @@ class TestController {
 		mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
 
 	}
+
+    @Test
+    public void likeQuote() throws Exception {
+        MockHttpServletRequestBuilder request = post("/quotes/{id}/like",1);
+        mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void dislikeQuote() throws Exception {
+        MockHttpServletRequestBuilder request = post("/quotes/{id}/dislike",1);
+        mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
+    }
 
 }
