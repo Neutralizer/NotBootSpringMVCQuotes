@@ -35,7 +35,7 @@ public class QuoteService {
      * 
      * Retrieves quote by its id. Not zero based.
      * @param id The id of the quote
-     * @return
+     * @return The quote
      */
     public Quote getQuote(int id) {
         return quoteRepository.get(id);
@@ -55,6 +55,22 @@ public class QuoteService {
      */
     public void remove(int id) {
     	quoteRepository.remove(id);
+    }
+
+    /**
+     * Adds 1 rating to the quote
+     * @param id The id of the quote
+     */
+    public void addRating(int id){
+        quoteRepository.addRating(id);
+    }
+
+    /**
+     * Removes 1 rating from the quote
+     * @param id The id of the quote
+     */
+    public void removeRating(int id){
+        quoteRepository.removeRating(id);
     }
 
 }

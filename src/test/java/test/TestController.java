@@ -48,26 +48,31 @@ class TestController {
 	@Test
 	public void getAllQuotes() throws Exception {
 
-		ArrayList<Quote> allQuotes = new ArrayList<Quote>();
-		allQuotes.add(new Quote(1, "da"));
-		allQuotes.add(new Quote(2, "bo"));
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me",0));
+		allQuotes.add(new Quote(2, "bo","Him",25));
 
-		when(quoteService.getAllQuotes()).thenReturn((List<Quote>) allQuotes);
+		when(quoteService.getAllQuotes()).thenReturn(allQuotes);
 
 		mockMvc.perform(get("/quotes")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().string(containsString("da")))
-				.andExpect(content().string(containsString("2")));
+				.andExpect(content().string(containsString("2")))
+				.andExpect(content().string(containsString("Him")))
+				.andExpect(content().string(containsString("25")));
 	}
 
 	@Test
 	public void getSingleQuote() throws Exception {
 		int id = 1;
 
-		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si"));
+		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si","Me",0));
 
 		mockMvc.perform(get("/quotes/{id}", id)).andDo(print())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(content().string(containsString("si"))).andExpect(content().string(containsString("1")))
+				.andExpect(content().string(containsString("si")))
+				.andExpect(content().string(containsString("1")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("0")))
 				.andReturn();
 
 	}
@@ -80,7 +85,7 @@ class TestController {
 
 	@Test
 	public void postQuoteTest() throws Exception {
-		Quote quote = new Quote(6, "baobab");
+		Quote quote = new Quote(6, "baobab","Me",-3);
 
 		Gson gson = new Gson();
 		String json = gson.toJson(quote);
@@ -92,5 +97,17 @@ class TestController {
 		mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
 
 	}
+
+    @Test
+    public void likeQuote() throws Exception {
+        MockHttpServletRequestBuilder request = post("/quotes/{id}/like",1);
+        mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
+    public void dislikeQuote() throws Exception {
+        MockHttpServletRequestBuilder request = post("/quotes/{id}/dislike",1);
+        mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
+    }
 
 }

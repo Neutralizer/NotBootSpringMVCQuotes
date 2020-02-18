@@ -18,4 +18,6 @@ public class Quote {
 
     private int id;
     private String quote;
+    private String author;
+    private int rating;
 }

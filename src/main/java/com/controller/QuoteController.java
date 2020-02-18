@@ -5,12 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.model.Quote;
 import com.service.QuoteService;
@@ -28,7 +23,7 @@ public class QuoteController {
     private QuoteService quoteService;
 
     /**
-     * Create quote. Test
+     * Create quote.
      */
     @PostMapping(path = "/quotes" , consumes = "application/json" )
     public ResponseEntity createQuote(@RequestBody Quote quote) {
@@ -71,6 +66,32 @@ public class QuoteController {
 
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    /**
+     * Adds one like to the quote with the specified id
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping(path = "/quotes/{id}/like")
+    public ResponseEntity likeQuote(@PathVariable int id){
+        quoteService.addRating(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Removes one like to the quote with the specified id
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping(path = "/quotes/{id}/dislike")
+    public ResponseEntity dislikeQuote(@PathVariable int id){
+        quoteService.removeRating(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
