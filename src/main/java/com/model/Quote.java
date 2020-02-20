@@ -29,9 +29,9 @@ public class Quote {
     private String author;
     private int rating;
 
-    public Quote (String quote, String author, int rating){
-        this.quote = quote;
-        this.author = author;
-        this.rating = rating;
-    }
+//    public Quote (String quote, String author, int rating){
+//        this.quote = quote;
+//        this.author = author;
+//        this.rating = rating;
+//    }
 }

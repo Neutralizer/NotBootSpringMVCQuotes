@@ -19,8 +19,8 @@ import java.util.Optional;
 @Service
 public class QuoteService {
 
-    @Autowired
-    private QuoteRepo quoteRepository;
+//    @Autowired
+//    private QuoteRepo quoteRepository;
 
     @Autowired
     private QuoteRepository quoteRepository1;
@@ -46,7 +46,7 @@ public class QuoteService {
 //        if (id < 1) throw new IllegalArgumentException("index can't be 0 or negative");
 //        return quoteRepository.get(id -1);
         Optional<Quote> optional = quoteRepository1.findById(id);
-        return optional.orElse(new Quote()); // TODO null or empty ?
+        return optional.orElse(null);
     }
 
     /**
