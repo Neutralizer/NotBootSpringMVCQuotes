@@ -11,14 +11,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.dao.QuoteRepository;
+import com.dao.QuoteRepo;
 import com.model.Quote;
 import com.service.QuoteService;
 
 class TestService {
 
 	private QuoteService quoteService = new QuoteService();
-	private QuoteRepository quoteRepository = new QuoteRepository();
+	private QuoteRepo quoteRepository = new QuoteRepo();
 
 	@BeforeEach
 	public void setUp() throws Exception {

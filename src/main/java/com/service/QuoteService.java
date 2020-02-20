@@ -1,11 +1,14 @@
 package com.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import com.dao.QuoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dao.QuoteRepository;
+import com.dao.QuoteRepo;
 import com.model.Quote;
 
 
@@ -20,7 +23,10 @@ import com.model.Quote;
 public class QuoteService {
 
 	@Autowired
-    private QuoteRepository quoteRepository;
+    private QuoteRepo quoteRepository;
+
+    @Autowired
+    private QuoteRepository quoteRepository1;
 
 
 	/**
@@ -28,7 +34,9 @@ public class QuoteService {
 	 * @return All quotes
 	 */
     public List<Quote> getAllQuotes() {
-        return quoteRepository.getAllQuotes();
+//        return quoteRepository.getAllQuotes();
+        List<Quote> all = (List<Quote>) quoteRepository1.findAll();
+        return all;
     }
 
     /**
@@ -38,7 +46,8 @@ public class QuoteService {
      * @return The quote
      */
     public Quote getQuote(int id) {
-        return quoteRepository.get(id);
+        if (id < 1) throw new IllegalArgumentException("index can't be 0 or negative");
+        return quoteRepository.get(id -1);
     }
 
     /**
