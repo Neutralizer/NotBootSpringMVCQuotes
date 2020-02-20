@@ -5,6 +5,7 @@ import com.model.Quote;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class SpringBootApplicationMain {
@@ -14,7 +15,7 @@ public class SpringBootApplicationMain {
 	}
 
 
-
+	@Bean
 	CommandLineRunner initData(QuoteRepository quoteRepository){
 		return args -> {
 			quoteRepository.save(new Quote("It's over 9000!!!", "Vegeta",0));

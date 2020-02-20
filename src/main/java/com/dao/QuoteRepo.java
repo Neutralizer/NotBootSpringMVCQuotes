@@ -13,7 +13,7 @@ import com.model.Quote;
  * @author Neutralizer
  *
  */
-//@Repository
+@Repository
 public class QuoteRepo {
 
 	private List<Quote> quotes = new ArrayList<>();
