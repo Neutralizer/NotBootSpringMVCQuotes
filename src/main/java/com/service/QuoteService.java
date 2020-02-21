@@ -1,6 +1,5 @@
 package com.service;
 
-import com.dao.QuoteRepo;
 import com.dao.QuoteRepository;
 import com.model.Quote;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,8 @@ import java.util.Optional;
 @Service
 public class QuoteService {
 
-//    @Autowired
-//    private QuoteRepo quoteRepository;
-
     @Autowired
-    private QuoteRepository quoteRepository1;
+    private QuoteRepository quoteRepository;
 
 
     /**
@@ -32,20 +28,17 @@ public class QuoteService {
      * @return All quotes
      */
     public List<Quote> getAllQuotes() {
-//        return quoteRepository.getAllQuotes();
-        return (List<Quote>) quoteRepository1.findAll();
+        return (List<Quote>) quoteRepository.findAll();
     }
 
     /**
-     * Retrieves quote by its id. Not zero based.
+     * Retrieves quote by its id.
      *
      * @param id The id of the quote
      * @return The quote
      */
     public Quote getQuote(int id) {
-//        if (id < 1) throw new IllegalArgumentException("index can't be 0 or negative");
-//        return quoteRepository.get(id -1);
-        Optional<Quote> optional = quoteRepository1.findById(id);
+        Optional<Quote> optional = quoteRepository.findById(id);
         return optional.orElse(null);
     }
 
@@ -55,8 +48,7 @@ public class QuoteService {
      * @param quote The quote to be added
      */
     public void addQuote(Quote quote) {
-//    	quoteRepository.add(quote);
-        quoteRepository1.save(quote);
+        quoteRepository.save(quote);
     }
 
     /**
@@ -65,8 +57,7 @@ public class QuoteService {
      * @param id The id of quote to be removed
      */
     public void remove(int id) {
-//    	quoteRepository.remove(id);
-        quoteRepository1.deleteById(id);
+        quoteRepository.deleteById(id);
     }
 
     /**
@@ -75,12 +66,11 @@ public class QuoteService {
      * @param id The id of the quote
      */
     public void addRating(int id) {
-//        quoteRepository.addRating(id);
-        Optional<Quote> optionalQuote = quoteRepository1.findById(id);
+        Optional<Quote> optionalQuote = quoteRepository.findById(id);
         if (optionalQuote.isPresent()) {
             Quote quote = optionalQuote.get();
             quote.setRating(quote.getRating() + 1);
-            quoteRepository1.save(quote);
+            quoteRepository.save(quote);
         } else {
             throw new NoSuchElementException(id + " Quote not present");
         }
@@ -92,12 +82,11 @@ public class QuoteService {
      * @param id The id of the quote
      */
     public void removeRating(int id) {
-//        quoteRepository.removeRating(id);
-        Optional<Quote> optionalQuote = quoteRepository1.findById(id);
+        Optional<Quote> optionalQuote = quoteRepository.findById(id);
         if (optionalQuote.isPresent()) {
             Quote quote = optionalQuote.get();
             quote.setRating(quote.getRating() - 1);
-            quoteRepository1.save(quote);
+            quoteRepository.save(quote);
         } else {
             throw new NoSuchElementException(id + " Quote not present");
         }

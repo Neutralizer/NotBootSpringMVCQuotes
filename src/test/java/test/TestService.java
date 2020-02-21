@@ -4,29 +4,62 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.hamcrest.core.StringContains.containsString;
+import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.SpringBootApplicationMain;
+import com.dao.QuoteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.dao.QuoteRepo;
 import com.model.Quote;
 import com.service.QuoteService;
 
+@RunWith(SpringRunner.class)
+//@DataJpaTest()
+@SpringBootTest(classes = SpringBootApplicationMain.class)
 class TestService {
 
-	private QuoteService quoteService = new QuoteService();
-	private QuoteRepo quoteRepository = new QuoteRepo();
+	@TestConfiguration
+	static class QuoteServiceTestContextConfiguration {
+
+		@Bean
+		public QuoteService quoteService() {
+			return new QuoteService();
+		}
+	}
+
+	@Autowired
+	private QuoteService quoteService;
+
+	@MockBean
+	private QuoteRepository quoteRepository;
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		ReflectionTestUtils.setField(quoteService, "quoteRepository", quoteRepository);
+//		ReflectionTestUtils.setField(quoteService, "quoteRepository", quoteRepository);
 	}
 
 	@Test
 	public void getAllQuotesNotNull() {
+		List<Quote> found = new ArrayList<>();
+		found.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
+		found.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
+
+		when(quoteRepository.findAll()).thenReturn(found);
+
 		List<Quote> allQuotes = quoteService.getAllQuotes();
 		assertNotNull(allQuotes);
 	}
