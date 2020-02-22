@@ -15,3 +15,4 @@
 9) Switched to intellij IDE in linux virtual machine
 10) Added Dockerfile and docker-compose.yml file - successful dockerizing
 11) Added author and rating to quote model
+12) Added spring data jpa and removed hardcoded dao layer
