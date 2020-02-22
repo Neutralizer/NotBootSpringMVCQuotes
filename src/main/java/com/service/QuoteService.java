@@ -21,7 +21,7 @@ public class QuoteService {
     private QuoteRepository quoteRepository;
 
     @Autowired
-    public QuoteService(QuoteRepository quoteRepository){
+    public QuoteService(QuoteRepository quoteRepository) {
         this.quoteRepository = quoteRepository;
     }
 
@@ -81,9 +81,9 @@ public class QuoteService {
     }
 
     /**
-     * Removes 1 rating from the quote
+     * Removes 1 rating from the quote.
      *
-     * @param id The id of the quote
+     * @param id The id of the quote.
      */
     public void removeRating(int id) {
         Optional<Quote> optionalQuote = quoteRepository.findById(id);
@@ -96,4 +96,23 @@ public class QuoteService {
         }
     }
 
+    /**
+     * Retrieves all quotes by given author.
+     *
+     * @param author Author of quotes.
+     * @return All quotes by given author.
+     */
+    public List<Quote> getAllQuotesOfAuthor(String author) {
+        return quoteRepository.findByAuthor(author);
+    }
+
+    /**
+     * Retrieves all quotes with given rating.
+     *
+     * @param rating Rating of quotes.
+     * @return All quotes with given rating.
+     */
+    public List<Quote> getAllQuotesWithRating(int rating) {
+        return quoteRepository.findByRating(rating);
+    }
 }

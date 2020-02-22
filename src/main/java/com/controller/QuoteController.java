@@ -45,6 +45,26 @@ public class QuoteController {
     }
 
     /**
+     * Get all quotes by given author.
+     */
+    @GetMapping(path = "/quotes", produces = "application/json")
+    public ResponseEntity<List<Quote>> filterByAuthor(@PathVariable(required = false) String author){
+        List<Quote> allQuotesOfAuthor = quoteService.getAllQuotesOfAuthor(author);
+
+        return new ResponseEntity<>(allQuotesOfAuthor, HttpStatus.OK);
+    }
+
+    /**
+     * Get all quotes with given rating.
+     */
+    @GetMapping(path = "/quotes", produces = "application/json")
+    public ResponseEntity<List<Quote>> filterByRating(@PathVariable(required = false) int rating){
+        List<Quote> allQuotesOfAuthor = quoteService.getAllQuotesWithRating(rating);
+
+        return new ResponseEntity<>(allQuotesOfAuthor, HttpStatus.OK);
+    }
+
+    /**
      * Get quote by id.
      */
     @GetMapping(path = "/quotes/{id}")
