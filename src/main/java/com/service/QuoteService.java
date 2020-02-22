@@ -11,15 +11,19 @@ import java.util.Optional;
 
 
 /**
- * QuoteService class for accessing the dao layer.
+ * QuoteService class for business logic.
  *
  * @author Neutralizer
  */
 @Service
 public class QuoteService {
 
-    @Autowired
     private QuoteRepository quoteRepository;
+
+    @Autowired
+    public QuoteService(QuoteRepository quoteRepository){
+        this.quoteRepository = quoteRepository;
+    }
 
 
     /**

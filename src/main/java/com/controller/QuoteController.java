@@ -48,11 +48,11 @@ public class QuoteController {
      * Get quote by id.
      */
     @GetMapping(path = "/quotes/{id}")
-    public Quote getQuote(@PathVariable int id) {
+    public ResponseEntity<Quote> getQuote(@PathVariable int id) {
 
         Quote quote = quoteService.getQuote(id);
 
-        return quote;
+        return new ResponseEntity<>(quote, HttpStatus.OK);
 
     }
 
@@ -69,10 +69,10 @@ public class QuoteController {
     }
 
     /**
-     * Adds one like to the quote with the specified id
+     * Add like to specified quote
      *
-     * @param id
-     * @return
+     * @param id id of the specified quote
+     * @return HttpStatus.OK on success
      */
     @PostMapping(path = "/quotes/{id}/like")
     public ResponseEntity likeQuote(@PathVariable int id){
@@ -82,10 +82,10 @@ public class QuoteController {
     }
 
     /**
-     * Removes one like to the quote with the specified id
+     * Add dislike to specified quote
      *
-     * @param id
-     * @return
+     * @param id id of the specified quote
+     * @return HttpStatus.OK on success
      */
     @PostMapping(path = "/quotes/{id}/dislike")
     public ResponseEntity dislikeQuote(@PathVariable int id){

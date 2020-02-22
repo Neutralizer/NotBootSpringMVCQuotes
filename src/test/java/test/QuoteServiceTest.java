@@ -34,7 +34,7 @@ class QuoteServiceTest {
 
 		@Bean
 		public QuoteService quoteService() {
-			return new QuoteService();
+			return new QuoteService(null);
 		}
 	}
 
