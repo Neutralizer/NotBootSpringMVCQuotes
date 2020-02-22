@@ -29,9 +29,8 @@ import com.model.Quote;
 import com.service.QuoteService;
 
 @RunWith(SpringRunner.class)
-//@DataJpaTest()
 @SpringBootTest(classes = SpringBootApplicationMain.class)
-class TestService {
+class QuoteServiceTest {
 
 	@TestConfiguration
 	static class QuoteServiceTestContextConfiguration {

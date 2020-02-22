@@ -29,7 +29,7 @@ import com.google.gson.Gson;
 import com.model.Quote;
 import com.service.QuoteService;
 
-class TestController {
+class QuoteControllerTest {
 
 	@Mock
 	private QuoteService quoteService;
