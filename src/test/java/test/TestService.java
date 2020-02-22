@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.hamcrest.core.StringContains.containsString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -48,100 +49,107 @@ class TestService {
 	private QuoteRepository quoteRepository;
 
 	@BeforeEach
-	public void setUp() throws Exception {
-//		ReflectionTestUtils.setField(quoteService, "quoteRepository", quoteRepository);
+	public void setUp() {
 	}
 
 	@Test
 	public void getAllQuotesNotNull() {
-		List<Quote> found = new ArrayList<>();
-		found.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
-		found.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
+		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
 
-		when(quoteRepository.findAll()).thenReturn(found);
+		when(quoteRepository.findAll()).thenReturn(allQuotes);
 
-		List<Quote> allQuotes = quoteService.getAllQuotes();
-		assertNotNull(allQuotes);
+		List<Quote> found = quoteService.getAllQuotes();
+		assertNotNull(found);
 	}
 
 	@Test
 	public void getAllQuotesLength() {
-		List<Quote> allQuotes = quoteService.getAllQuotes();
-		assertEquals(allQuotes.size(), 5);
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
+		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
+
+		when(quoteRepository.findAll()).thenReturn(allQuotes);
+
+		List<Quote> found = quoteService.getAllQuotes();
+		assertEquals(found.size(), 2);
 	}
 
 	@Test
 	public void getAllQuotesFirstQuote() {
-		List<Quote> allQuotes = quoteService.getAllQuotes();
-		assertEquals(allQuotes.get(0), new Quote(1, "It's over 9000!!!","Vegeta",0));
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
+		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
+
+		when(quoteRepository.findAll()).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotes();
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!","Vegeta",0));
 	}
 
 	@Test
 	public void getQuoteNotNull() {
-		Quote quote = quoteService.getQuote(2);
-		assertNotNull(quote);
+		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", 0);
+
+		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
+
+		Quote found = quoteService.getQuote(2);
+		assertNotNull(found);
 	}
 	
 	@Test
 	public void getQuoteCheckString() {
-		Quote quote = quoteService.getQuote(3);
-		org.hamcrest.MatcherAssert.assertThat(quote.getQuote(), containsString("meat"));
+		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", 0);
+
+		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
+
+		Quote found = quoteService.getQuote(2);
+		org.hamcrest.MatcherAssert.assertThat(found.getQuote(), containsString("defend"));
 	}
 	
 	@Test
 	public void getQuoteCheckId() {
-		Quote quote = quoteService.getQuote(4);
-		assertEquals(quote.getId(), 4);
+		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", 0);
+
+		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
+
+		Quote found = quoteService.getQuote(2);
+		assertEquals(found.getId(), 2);
 	}
 	
 	@Test
 	public void removeQuote() {
-		quoteService.remove(4);
-		List<Quote> allQuotes = quoteService.getAllQuotes();
-		assertEquals(allQuotes.size(), 4);
+		quoteService.remove(2);
+
+		verify(quoteRepository).deleteById(2);
 	}
 	
 	@Test
 	public void addQuote() {
 		Quote quote = new Quote(6, "yare yare daze","Me",0);
-		quoteService.addQuote(quote);
-		List<Quote> allQuotes = quoteService.getAllQuotes();
-		assertEquals(allQuotes.size(), 6);
-	}
 
-	@Test
-	public void addQuoteAndCheckString() {
-		Quote quote = new Quote(6, "yare yare daze","Me",0);
 		quoteService.addQuote(quote);
-		Quote quote2 = quoteService.getQuote(6);
-		org.hamcrest.MatcherAssert.assertThat(quote2.getQuote(), containsString("daze"));
+		verify(quoteRepository).save(quote);
 	}
 
 	@Test
 	public void addLikeToQuote() {
 		Quote quote = new Quote(6, "oh no!","Me",0);
-		quoteService.addQuote(quote);
-		quoteService.addRating(6);
-		assertEquals(quoteService.getQuote(6).getRating(), 1);
+
+		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
+		quoteService.addRating(2);
+		verify(quoteRepository).save(quote);
+		assertEquals(quote.getRating(), 1);
 	}
 
 	@Test
 	public void addDislikeToQuote() {
 		Quote quote = new Quote(6, "oh no!","Me",0);
-		quoteService.addQuote(quote);
-		quoteService.removeRating(6);
-		assertEquals(quoteService.getQuote(6).getRating(), -1);
+
+		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
+		quoteService.removeRating(2);
+		verify(quoteRepository).save(quote);
+		assertEquals(quote.getRating(), -1);
 	}
-
-	@Test
-	public void addLikeAndDislikeToQuote() {
-		Quote quote = new Quote(6, "oh no!","Me",0);
-		quoteService.addQuote(quote);
-		quoteService.removeRating(6);
-		quoteService.addRating(6);
-		assertEquals(quoteService.getQuote(6).getRating(), 0);
-	}
-
-
 
 }
