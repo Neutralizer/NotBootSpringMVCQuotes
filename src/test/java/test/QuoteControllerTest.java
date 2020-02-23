@@ -62,6 +62,57 @@ class QuoteControllerTest {
 	}
 
 	@Test
+	public void getAllQuotesByAuthor() throws Exception {
+
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me",0));
+		allQuotes.add(new Quote(2, "bo","Me",25));
+
+		when(quoteService.getAllQuotesOfAuthor("Me")).thenReturn(allQuotes);
+
+		mockMvc.perform(get("/quotes?author=Me")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("da")))
+				.andExpect(content().string(containsString("bo")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("25")));
+	}
+
+	@Test
+	public void getAllQuotesWithRating() throws Exception {
+
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me",0));
+		allQuotes.add(new Quote(2, "bo","Me",0));
+
+		when(quoteService.getAllQuotesWithRating(0)).thenReturn(allQuotes);
+
+		mockMvc.perform(get("/quotes?rating=0")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("da")))
+				.andExpect(content().string(containsString("bo")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("0")));
+	}
+
+	@Test
+	public void getAllQuotesOfAuthorWithRating() throws Exception {
+
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me",0));
+		allQuotes.add(new Quote(2, "bo","Me",0));
+
+		when(quoteService.getAllQuotesOfAuthorWithRating("Me",0)).thenReturn(allQuotes);
+
+		mockMvc.perform(get("/quotes?author=Me&rating=0")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("da")))
+				.andExpect(content().string(containsString("bo")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("0")));
+	}
+
+	@Test
 	public void getSingleQuote() throws Exception {
 		int id = 1;
 
