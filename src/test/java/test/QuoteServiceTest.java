@@ -84,6 +84,39 @@ class QuoteServiceTest {
 	}
 
 	@Test
+	public void getAllQuotesOfAuthorFirstQuote() {
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", 0));
+
+		when(quoteRepository.findByAuthor("Vegeta")).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotesOfAuthor("Vegeta");
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", 0));
+	}
+
+	@Test
+	public void getAllQuotesWithRatingFirstQuote() {
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 2));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", 2));
+
+		when(quoteRepository.findByRating(2)).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotesWithRating(2);
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", 2));
+	}
+
+	@Test
+	public void getAllQuotesOfAuthorWithRatingFirstQuote() {
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 2));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", 2));
+
+		when(quoteRepository.findByAuthorAndRating("Vegeta",2)).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotesOfAuthorWithRating("Vegeta",2);
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", 2));
+	}
+
+	@Test
 	public void getQuoteNotNull() {
 		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", 0);
 
