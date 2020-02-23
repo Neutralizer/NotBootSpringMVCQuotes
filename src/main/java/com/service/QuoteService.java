@@ -115,4 +115,15 @@ public class QuoteService {
     public List<Quote> getAllQuotesWithRating(int rating) {
         return quoteRepository.findByRating(rating);
     }
+
+    /**
+     * Retrieves all quotes by given author with given rating
+     *
+     * @param author Author of quotes.
+     * @param rating Rating of quotes.
+     * @return All quotes by given author with given rating
+     */
+    public List<Quote> getAllQuotesOfAuthorWithRating(String author, Integer rating) {
+        return quoteRepository.findByAuthorAndRating(author,rating);
+    }
 }

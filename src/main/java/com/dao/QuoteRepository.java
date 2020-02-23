@@ -10,4 +10,6 @@ public interface QuoteRepository extends PagingAndSortingRepository<Quote,Intege
     List<Quote> findByAuthor(String author);
 
     List<Quote> findByRating(int rating);
+
+    List<Quote> findByAuthorAndRating(String author, int rating);
 }

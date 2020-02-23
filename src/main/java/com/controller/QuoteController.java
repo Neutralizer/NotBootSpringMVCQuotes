@@ -40,7 +40,8 @@ public class QuoteController {
                                                  @RequestParam(required = false) Integer rating) {
 
         if (author != null && rating != null) {
-            //TODO findbyAuthorAndRating
+            List<Quote> allQuotesOfAuthorWithRating = quoteService.getAllQuotesOfAuthorWithRating(author,rating);
+            return new ResponseEntity<>(allQuotesOfAuthorWithRating, HttpStatus.OK);
         }
         if (author != null) {
             List<Quote> allQuotesOfAuthor = quoteService.getAllQuotesOfAuthor(author);
