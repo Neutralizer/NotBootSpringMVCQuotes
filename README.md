@@ -20,7 +20,7 @@ docker-compose up
 5) Added controller layer integration testing with MockMVC and Mockito 
 6) Added class level documentation
 7) Converted pure spring MVC project to spring boot project
-8) Added spring boot starter actuator endpoint (http://localhost:8080/actuator/health ; Sensitive endpoints disabled if web security is not enabled)
+8) Added spring boot starter actuator endpoint (http://localhost:8080/actuator/health ; Sensitive endpoints not exposed if web security is not enabled)
 9) Switched to intellij IDE in linux virtual machine
 10) Added Dockerfile and docker-compose.yml file - successful dockerizing
 11) Added author and rating to quote model
