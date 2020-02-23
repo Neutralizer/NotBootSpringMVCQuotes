@@ -2,6 +2,15 @@
 
 ## Test spring project that displays quotes 
 
+Running application.
+```
+mvn clean install
+
+docker-compose build
+
+docker-compose up
+```
+
 ### Program evolution stages:
 
 1) Created pure spring MVC project with controller and service layer 
@@ -16,3 +25,4 @@
 10) Added Dockerfile and docker-compose.yml file - successful dockerizing
 11) Added author and rating to quote model
 12) Added spring data jpa and removed hardcoded dao layer
+13) Added filters for main endpoint - /quotes
