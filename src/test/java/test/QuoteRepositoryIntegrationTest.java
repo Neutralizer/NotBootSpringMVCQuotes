@@ -43,6 +43,24 @@ public class QuoteRepositoryIntegrationTest {
     }
 
     @Test
+    public void whenFindAllByAuthor_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findByAuthor("Kenshiro");
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
+    public void whenFindAllByRating_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findByRating(1);
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
+    public void whenFindAllByAuthorAndRating_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findByAuthorAndRating("Luffy",1);
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
     public void whenFindById_thenReturnQuote_AndCheckQuoteName() {
         Optional<Quote> found = quoteRepository.findById(2);
         if(!found.isPresent()){
