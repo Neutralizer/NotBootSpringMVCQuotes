@@ -26,3 +26,4 @@ docker-compose up
 11) Added author and rating to quote model
 12) Added spring data jpa and removed hardcoded dao layer
 13) Added filters for main endpoint - /quotes
+14) Added prometheus(on port 9090) and grafana(on port 3000) monitoring
