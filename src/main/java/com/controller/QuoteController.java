@@ -1,14 +1,13 @@
 package com.controller;
 
-import java.util.List;
-
+import com.model.Quote;
+import com.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.model.Quote;
-import com.service.QuoteService;
+import java.util.List;
 
 /**
  * Quote controller with basic CRUD operations.
@@ -25,7 +24,7 @@ public class QuoteController {
     /**
      * Create quote.
      */
-    @PostMapping(path = "/quotes" , consumes = "application/json" )
+    @PostMapping(path = "/quotes", consumes = "application/json")
     public ResponseEntity createQuote(@RequestBody Quote quote) {
 
         quoteService.addQuote(quote);
@@ -37,22 +36,38 @@ public class QuoteController {
      * Get all quotes.
      */
     @GetMapping(path = "/quotes", produces = "application/json")
-    public ResponseEntity<List<Quote>> getQuotes() {
+    public ResponseEntity<List<Quote>> getQuotes(@RequestParam(required = false) String author,
+                                                 @RequestParam(required = false) Integer rating) {
+
+        if (author != null && rating != null) {
+            List<Quote> allQuotesOfAuthorWithRating = quoteService.getAllQuotesOfAuthorWithRating(author,rating);
+            return new ResponseEntity<>(allQuotesOfAuthorWithRating, HttpStatus.OK);
+        }
+        if (author != null) {
+            List<Quote> allQuotesOfAuthor = quoteService.getAllQuotesOfAuthor(author);
+            return new ResponseEntity<>(allQuotesOfAuthor, HttpStatus.OK);
+        }
+        if (rating != null) {
+            List<Quote> allQuotesWithRating = quoteService.getAllQuotesWithRating(rating);
+            return new ResponseEntity<>(allQuotesWithRating, HttpStatus.OK);
+        }
 
         List<Quote> allQuotes = quoteService.getAllQuotes();
-
         return new ResponseEntity<>(allQuotes, HttpStatus.OK);
+
+
     }
+
 
     /**
      * Get quote by id.
      */
     @GetMapping(path = "/quotes/{id}")
-    public Quote getQuote(@PathVariable int id) {
+    public ResponseEntity<Quote> getQuote(@PathVariable int id) {
 
         Quote quote = quoteService.getQuote(id);
 
-        return quote;
+        return new ResponseEntity<>(quote, HttpStatus.OK);
 
     }
 
@@ -69,26 +84,26 @@ public class QuoteController {
     }
 
     /**
-     * Adds one like to the quote with the specified id
+     * Add like to specified quote
      *
-     * @param id
-     * @return
+     * @param id id of the specified quote
+     * @return HttpStatus.OK on success
      */
     @PostMapping(path = "/quotes/{id}/like")
-    public ResponseEntity likeQuote(@PathVariable int id){
+    public ResponseEntity likeQuote(@PathVariable int id) {
         quoteService.addRating(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
-     * Removes one like to the quote with the specified id
+     * Add dislike to specified quote
      *
-     * @param id
-     * @return
+     * @param id id of the specified quote
+     * @return HttpStatus.OK on success
      */
     @PostMapping(path = "/quotes/{id}/dislike")
-    public ResponseEntity dislikeQuote(@PathVariable int id){
+    public ResponseEntity dislikeQuote(@PathVariable int id) {
         quoteService.removeRating(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

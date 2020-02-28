@@ -1,8 +1,12 @@
 package com.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Required;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
 /**
@@ -14,10 +18,24 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@RequiredArgsConstructor
 public class Quote {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NonNull
     private String quote;
+    @NonNull
     private String author;
+    @NonNull
     private int rating;
+
+
+//    public Quote (String quote, String author, int rating){
+//        this.quote = quote;
+//        this.author = author;
+//        this.rating = rating;
+//    }
 }
