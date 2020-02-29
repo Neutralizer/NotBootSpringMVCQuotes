@@ -32,10 +32,4 @@ public class Quote {
     @NonNull
     private int rating;
 
-
-//    public Quote (String quote, String author, int rating){
-//        this.quote = quote;
-//        this.author = author;
-//        this.rating = rating;
-//    }
 }

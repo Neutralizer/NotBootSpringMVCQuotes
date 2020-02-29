@@ -38,21 +38,20 @@ public class QuoteController {
     @GetMapping(path = "/quotes", produces = "application/json")
     public ResponseEntity<List<Quote>> getQuotes(@RequestParam(required = false) String author,
                                                  @RequestParam(required = false) Integer rating) {
-
+        List<Quote> allQuotes = null;
         if (author != null && rating != null) {
-            List<Quote> allQuotesOfAuthorWithRating = quoteService.getAllQuotesOfAuthorWithRating(author,rating);
-            return new ResponseEntity<>(allQuotesOfAuthorWithRating, HttpStatus.OK);
+            allQuotes = quoteService.getAllQuotesOfAuthorWithRating(author, rating);
         }
-        if (author != null) {
-            List<Quote> allQuotesOfAuthor = quoteService.getAllQuotesOfAuthor(author);
-            return new ResponseEntity<>(allQuotesOfAuthor, HttpStatus.OK);
+        if (author != null && rating == null) {
+            allQuotes = quoteService.getAllQuotesOfAuthor(author);
         }
-        if (rating != null) {
-            List<Quote> allQuotesWithRating = quoteService.getAllQuotesWithRating(rating);
-            return new ResponseEntity<>(allQuotesWithRating, HttpStatus.OK);
+        if (author == null && rating != null) {
+            allQuotes = quoteService.getAllQuotesWithRating(rating);
+        }
+        if (author == null && rating == null) {
+            allQuotes = quoteService.getAllQuotes();
         }
 
-        List<Quote> allQuotes = quoteService.getAllQuotes();
         return new ResponseEntity<>(allQuotes, HttpStatus.OK);
 
 
