@@ -1,4 +1,4 @@
-package test;
+package testQuotes;
 
 import com.SpringBootApplicationMain;
 import com.dao.QuoteRepository;
