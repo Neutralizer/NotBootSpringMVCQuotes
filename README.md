@@ -24,6 +24,6 @@ docker-compose up
 9) Switched to intellij IDE in linux virtual machine
 10) Added Dockerfile and docker-compose.yml file - successful dockerizing
 11) Added author and rating to quote model
-12) Added spring data jpa and removed hardcoded dao layer
+12) Added spring data jpa, removed hardcoded dao layer and added db integration tests
 13) Added filters for main endpoint - /quotes
 14) Added monitoring support - prometheus(on port 9090) and grafana(on port 3000) 

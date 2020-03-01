@@ -5,9 +5,12 @@ import com.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 /**
  * Quote controller with basic CRUD operations.
@@ -38,21 +41,20 @@ public class QuoteController {
     @GetMapping(path = "/quotes", produces = "application/json")
     public ResponseEntity<List<Quote>> getQuotes(@RequestParam(required = false) String author,
                                                  @RequestParam(required = false) Integer rating) {
+        List<Quote> allQuotes = null;
+        if (!isEmpty(author) && !isEmpty(rating)) {
+            allQuotes = quoteService.getAllQuotesOfAuthorWithRating(author, rating);
+        }
+        if (!isEmpty(author) && isEmpty(rating)) {
+            allQuotes = quoteService.getAllQuotesOfAuthor(author);
+        }
+        if (isEmpty(author) && !isEmpty(rating)) {
+            allQuotes = quoteService.getAllQuotesWithRating(rating);
+        }
+        if (isEmpty(author) && isEmpty(rating)) {
+            allQuotes = quoteService.getAllQuotes();
+        }
 
-        if (author != null && rating != null) {
-            List<Quote> allQuotesOfAuthorWithRating = quoteService.getAllQuotesOfAuthorWithRating(author,rating);
-            return new ResponseEntity<>(allQuotesOfAuthorWithRating, HttpStatus.OK);
-        }
-        if (author != null) {
-            List<Quote> allQuotesOfAuthor = quoteService.getAllQuotesOfAuthor(author);
-            return new ResponseEntity<>(allQuotesOfAuthor, HttpStatus.OK);
-        }
-        if (rating != null) {
-            List<Quote> allQuotesWithRating = quoteService.getAllQuotesWithRating(rating);
-            return new ResponseEntity<>(allQuotesWithRating, HttpStatus.OK);
-        }
-
-        List<Quote> allQuotes = quoteService.getAllQuotes();
         return new ResponseEntity<>(allQuotes, HttpStatus.OK);
 
 

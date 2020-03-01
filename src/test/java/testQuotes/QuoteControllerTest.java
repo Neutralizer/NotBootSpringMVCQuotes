@@ -1,4 +1,4 @@
-package test;
+package testQuotes;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -28,6 +27,8 @@ import com.controller.QuoteController;
 import com.google.gson.Gson;
 import com.model.Quote;
 import com.service.QuoteService;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 class QuoteControllerTest {
 
@@ -53,8 +54,9 @@ class QuoteControllerTest {
 		allQuotes.add(new Quote(2, "bo","Him",25));
 
 		when(quoteService.getAllQuotes()).thenReturn(allQuotes);
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").build().toUriString();
 
-		mockMvc.perform(get("/quotes")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("2")))
 				.andExpect(content().string(containsString("Him")))
@@ -70,7 +72,10 @@ class QuoteControllerTest {
 
 		when(quoteService.getAllQuotesOfAuthor("Me")).thenReturn(allQuotes);
 
-		mockMvc.perform(get("/quotes?author=Me")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").query("author={author}")
+				.buildAndExpand("Me").toUriString();
+
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("bo")))
@@ -87,7 +92,10 @@ class QuoteControllerTest {
 
 		when(quoteService.getAllQuotesWithRating(0)).thenReturn(allQuotes);
 
-		mockMvc.perform(get("/quotes?rating=0")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").query("rating={rating}")
+				.buildAndExpand("0").toUriString();
+
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("bo")))
@@ -104,7 +112,10 @@ class QuoteControllerTest {
 
 		when(quoteService.getAllQuotesOfAuthorWithRating("Me",0)).thenReturn(allQuotes);
 
-		mockMvc.perform(get("/quotes?author=Me&rating=0")).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").query("author={author}")
+				.query("rating={rating}").buildAndExpand("Me","0").toUriString();
+
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("bo")))
@@ -117,8 +128,10 @@ class QuoteControllerTest {
 		int id = 1;
 
 		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si","Me",0));
+		String uri = UriComponentsBuilder.newInstance().path("/quotes/{id}")
+				.buildAndExpand(id).toUriString();
 
-		mockMvc.perform(get("/quotes/{id}", id)).andDo(print())
+		mockMvc.perform(get(uri)).andDo(print())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().string(containsString("si")))
 				.andExpect(content().string(containsString("1")))
@@ -130,7 +143,9 @@ class QuoteControllerTest {
 
 	@Test
 	public void deleteSingleQuote() throws Exception {
-		mockMvc.perform(delete("/quotes/{id}", 1)).andExpect(status().isOk());
+		String uri = UriComponentsBuilder.newInstance().path("/quotes/{id}")
+				.buildAndExpand(1).toUriString();
+		mockMvc.perform(delete(uri)).andExpect(status().isOk());
 
 	}
 
@@ -140,8 +155,10 @@ class QuoteControllerTest {
 
 		Gson gson = new Gson();
 		String json = gson.toJson(quote);
+		String uri = UriComponentsBuilder.newInstance().path("/quotes")
+				.build().toUriString();
 
-		MockHttpServletRequestBuilder request = post("/quotes");
+		MockHttpServletRequestBuilder request = post(uri);
 		request.content(json);
 		request.accept(MediaType.APPLICATION_JSON);
 		request.contentType(MediaType.APPLICATION_JSON);
@@ -151,13 +168,19 @@ class QuoteControllerTest {
 
     @Test
     public void likeQuote() throws Exception {
-        MockHttpServletRequestBuilder request = post("/quotes/{id}/like",1);
+		String uri = UriComponentsBuilder.newInstance().path("/quotes/{id}/like")
+				.buildAndExpand(1).toUriString();
+
+        MockHttpServletRequestBuilder request = post(uri);
         mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
     public void dislikeQuote() throws Exception {
-        MockHttpServletRequestBuilder request = post("/quotes/{id}/dislike",1);
+		String uri = UriComponentsBuilder.newInstance().path("/quotes/{id}/dislike")
+				.buildAndExpand(1).toUriString();
+
+        MockHttpServletRequestBuilder request = post(uri);
         mockMvc.perform(request).andDo(print()).andExpect(status().isOk());
     }
 
