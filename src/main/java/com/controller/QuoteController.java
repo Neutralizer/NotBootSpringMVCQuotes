@@ -5,9 +5,12 @@ import com.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 /**
  * Quote controller with basic CRUD operations.
@@ -39,16 +42,16 @@ public class QuoteController {
     public ResponseEntity<List<Quote>> getQuotes(@RequestParam(required = false) String author,
                                                  @RequestParam(required = false) Integer rating) {
         List<Quote> allQuotes = null;
-        if (author != null && rating != null) {
+        if (!isEmpty(author) && !isEmpty(rating)) {
             allQuotes = quoteService.getAllQuotesOfAuthorWithRating(author, rating);
         }
-        if (author != null && rating == null) {
+        if (!isEmpty(author) && isEmpty(rating)) {
             allQuotes = quoteService.getAllQuotesOfAuthor(author);
         }
-        if (author == null && rating != null) {
+        if (isEmpty(author) && !isEmpty(rating)) {
             allQuotes = quoteService.getAllQuotesWithRating(rating);
         }
-        if (author == null && rating == null) {
+        if (isEmpty(author) && isEmpty(rating)) {
             allQuotes = quoteService.getAllQuotes();
         }
 
