@@ -5,7 +5,6 @@ import com.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +20,13 @@ import static org.springframework.util.StringUtils.isEmpty;
 @RestController
 public class QuoteController {
 
-    @Autowired
+
     private QuoteService quoteService;
+
+    @Autowired
+    public QuoteController(QuoteService quoteService) {
+        this.quoteService = quoteService;
+    }
 
     /**
      * Create quote.
