@@ -49,6 +49,12 @@ public class QuoteRepositoryIntegrationTest {
     }
 
     @Test
+    public void whenFindAllBySource_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findBySource("Book");
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
     public void whenFindAllByRating_thenReturnQuotes_AndCheckSize() {
         List<Quote> found = quoteRepository.findByRating(1);
         assertThat(found.size(), is(1));
@@ -57,6 +63,24 @@ public class QuoteRepositoryIntegrationTest {
     @Test
     public void whenFindAllByAuthorAndRating_thenReturnQuotes_AndCheckSize() {
         List<Quote> found = quoteRepository.findByAuthorAndRating("Luffy",1);
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
+    public void whenFindAllByAuthorAndSource_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findByAuthorAndSource("Luffy","Movie");
+        assertThat(found.size(), is(3));
+    }
+
+    @Test
+    public void whenFindAllBySourceAndRating_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findBySourceAndRating("Movie",1);
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
+    public void whenFindAllByAuthorAndRatingAndSource_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findByAuthorAndSourceAndRating("Luffy","Movie",1);
         assertThat(found.size(), is(1));
     }
 
