@@ -27,3 +27,4 @@ docker-compose up
 12) Added spring data jpa, removed hardcoded dao layer and added db integration tests
 13) Added filters for main endpoint - /quotes
 14) Added monitoring support - prometheus(on port 9090) and grafana(on port 3000) 
+15) Added source field to entity 
