@@ -51,8 +51,8 @@ class QuoteServiceTest {
 	@Test
 	public void getAllQuotesNotNull() {
 		List<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
-		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",0));
+		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", "Movie",0));
 
 		when(quoteRepository.findAll()).thenReturn(allQuotes);
 
@@ -63,8 +63,8 @@ class QuoteServiceTest {
 	@Test
 	public void getAllQuotesLength() {
 		List<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
-		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",0));
+		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", "Movie",0));
 
 		when(quoteRepository.findAll()).thenReturn(allQuotes);
 
@@ -75,50 +75,50 @@ class QuoteServiceTest {
 	@Test
 	public void getAllQuotesFirstQuote() {
 		List<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
-		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", 0));
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",0));
+		allQuotes.add(new Quote(2, "I will defend my nakama!", "Luffy", "Movie",0));
 
 		when(quoteRepository.findAll()).thenReturn(allQuotes);
 		List<Quote> found = quoteService.getAllQuotes();
-		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!","Vegeta",0));
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!","Vegeta","Movie",0));
 	}
 
 	@Test
 	public void getAllQuotesOfAuthorFirstQuote() {
 		List<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 0));
-		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", 0));
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",0));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", "Movie",0));
 
 		when(quoteRepository.findByAuthor("Vegeta")).thenReturn(allQuotes);
 		List<Quote> found = quoteService.getAllQuotesOfAuthor("Vegeta");
-		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", 0));
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",0));
 	}
 
 	@Test
 	public void getAllQuotesWithRatingFirstQuote() {
 		List<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 2));
-		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", 2));
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta","Movie", 2));
 
 		when(quoteRepository.findByRating(2)).thenReturn(allQuotes);
 		List<Quote> found = quoteService.getAllQuotesWithRating(2);
-		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", 2));
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
 	}
 
 	@Test
 	public void getAllQuotesOfAuthorWithRatingFirstQuote() {
 		List<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", 2));
-		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", 2));
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", "Movie",2));
 
 		when(quoteRepository.findByAuthorAndRating("Vegeta",2)).thenReturn(allQuotes);
 		List<Quote> found = quoteService.getAllQuotesOfAuthorWithRating("Vegeta",2);
-		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", 2));
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
 	}
 
 	@Test
 	public void getQuoteNotNull() {
-		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", 0);
+		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", "Movie",0);
 
 		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
 
@@ -128,7 +128,7 @@ class QuoteServiceTest {
 	
 	@Test
 	public void getQuoteCheckString() {
-		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", 0);
+		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy","Movie", 0);
 
 		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
 
@@ -138,7 +138,7 @@ class QuoteServiceTest {
 	
 	@Test
 	public void getQuoteCheckId() {
-		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", 0);
+		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", "Movie",0);
 
 		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
 
@@ -155,7 +155,7 @@ class QuoteServiceTest {
 	
 	@Test
 	public void addQuote() {
-		Quote quote = new Quote(6, "yare yare daze","Me",0);
+		Quote quote = new Quote(6, "yare yare daze","Me","Movie",0);
 
 		quoteService.addQuote(quote);
 		verify(quoteRepository).save(quote);
@@ -163,7 +163,7 @@ class QuoteServiceTest {
 
 	@Test
 	public void addLikeToQuote() {
-		Quote quote = new Quote(6, "oh no!","Me",0);
+		Quote quote = new Quote(6, "oh no!","Me","Movie",0);
 
 		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
 		quoteService.addRating(2);
@@ -173,7 +173,7 @@ class QuoteServiceTest {
 
 	@Test
 	public void addDislikeToQuote() {
-		Quote quote = new Quote(6, "oh no!","Me",0);
+		Quote quote = new Quote(6, "oh no!","Me","Movie",0);
 
 		when(quoteRepository.findById(2)).thenReturn(java.util.Optional.of(quote));
 		quoteService.removeRating(2);

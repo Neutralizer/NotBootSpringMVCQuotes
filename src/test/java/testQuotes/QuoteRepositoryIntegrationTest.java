@@ -33,8 +33,8 @@ public class QuoteRepositoryIntegrationTest {
 
     @Test
     public void whenFindAll_thenReturnQuotes_AndCheckSize() {
-        testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta", 0));
-        testEntityManager.persist(new Quote("KROKODAILUU!", "Luffy", 0));
+        testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta", "Movie",0));
+        testEntityManager.persist(new Quote("KROKODAILUU!", "Luffy", "Movie",0));
         testEntityManager.flush();
 
         List<Quote> found = (List<Quote>) quoteRepository.findAll();
@@ -81,7 +81,7 @@ public class QuoteRepositoryIntegrationTest {
 
     @Test
     public void whenPersist_thenGet_AndCheckQuoteName() {
-        Quote vegeta = testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta", 0));
+        Quote vegeta = testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta","Movie", 0));
         testEntityManager.flush();
 
         Optional<Quote> found = quoteRepository.findById(vegeta.getId());
