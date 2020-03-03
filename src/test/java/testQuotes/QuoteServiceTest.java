@@ -117,6 +117,50 @@ class QuoteServiceTest {
 	}
 
 	@Test
+	public void getAllQuotesFromSourceFirstQuote() {
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",0));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", "Movie",0));
+
+		when(quoteRepository.findBySource("Movie")).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotesFromSource("Movie");
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",0));
+	}
+
+	@Test
+	public void getAllQuotesOfAuthorWithRatingFromSourceFirstQuote() {
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", "Movie",2));
+
+		when(quoteRepository.findByAuthorAndSourceAndRating("Vegeta","Movie",2)).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotesOfAuthorWithRatingFromSource("Vegeta","Movie",2);
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+	}
+
+	@Test
+	public void getAllQuotesOfAuthorFromSourceFirstQuote() {
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", "Movie",2));
+
+		when(quoteRepository.findByAuthorAndSource("Vegeta","Movie")).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotesOfAuthorFromSource("Vegeta","Movie");
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+	}
+
+	@Test
+	public void getAllQuotesFromSourceWithRatingFirstQuote() {
+		List<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+		allQuotes.add(new Quote(2, "I am the Saiyan Prince", "Vegeta", "Movie",2));
+
+		when(quoteRepository.findBySourceAndRating("Movie",2)).thenReturn(allQuotes);
+		List<Quote> found = quoteService.getAllQuotesFromSourceWithRating("Movie",2);
+		assertEquals(found.get(0), new Quote(1, "It's over 9000!!!", "Vegeta", "Movie",2));
+	}
+
+	@Test
 	public void getQuoteNotNull() {
 		Quote quote = new Quote(2, "I will defend my nakama!", "Luffy", "Movie",0);
 
