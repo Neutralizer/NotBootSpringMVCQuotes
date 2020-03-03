@@ -2,7 +2,7 @@
 
 ## Test spring project that displays quotes 
 
-Running application.
+Running the application:
 ```
 mvn clean install
 
