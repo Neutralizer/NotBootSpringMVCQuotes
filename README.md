@@ -28,3 +28,5 @@ docker-compose up
 13) Added filters for main endpoint - /quotes
 14) Added monitoring support - prometheus(on port 9090) and grafana(on port 3000) 
 15) Added source field to entity 
+16) Added dev and prod profiles
+17) Added mysql database for prod profile. H2 is still used for dev profile
