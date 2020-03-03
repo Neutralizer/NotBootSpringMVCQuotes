@@ -30,6 +30,8 @@ public class Quote {
     @NonNull
     private String author;
     @NonNull
+    private String source;
+    @NonNull
     private int rating;
 
 }

@@ -44,7 +44,8 @@ public class QuoteController {
      */
     @GetMapping(path = "/quotes", produces = "application/json")
     public ResponseEntity<List<Quote>> getQuotes(@RequestParam(required = false) String author,
-                                                 @RequestParam(required = false) Integer rating) {
+                                                 @RequestParam(required = false) Integer rating,
+                                                 @RequestParam(required = false) String source) {
         List<Quote> allQuotes = null;
         if (!isEmpty(author) && !isEmpty(rating)) {
             allQuotes = quoteService.getAllQuotesOfAuthorWithRating(author, rating);

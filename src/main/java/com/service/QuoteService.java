@@ -107,6 +107,16 @@ public class QuoteService {
     }
 
     /**
+     * Retrieves all quotes by given source.
+     *
+     * @param source Source of quotes.
+     * @return All quotes from given source.
+     */
+    public List<Quote> getAllQuotesFromSource(String source) {
+        return quoteRepository.findBySource(source);
+    }
+
+    /**
      * Retrieves all quotes with given rating.
      *
      * @param rating Rating of quotes.
