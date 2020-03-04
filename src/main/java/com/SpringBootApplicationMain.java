@@ -17,7 +17,7 @@ public class SpringBootApplicationMain {
 
 
 	@Bean
-	@Profile("prod")
+	@Profile("dev")
 	CommandLineRunner initData(QuoteRepository quoteRepository){
 		return args -> {
 			quoteRepository.save(new Quote(1,"It's over 9000!!!", "Vegeta","Movie",0));
