@@ -44,18 +44,31 @@ public class QuoteController {
      */
     @GetMapping(path = "/quotes", produces = "application/json")
     public ResponseEntity<List<Quote>> getQuotes(@RequestParam(required = false) String author,
+                                                 @RequestParam(required = false) String source,
                                                  @RequestParam(required = false) Integer rating) {
         List<Quote> allQuotes = null;
-        if (!isEmpty(author) && !isEmpty(rating)) {
+        if (!isEmpty(author) && !isEmpty(rating) && !isEmpty(source)) {
+            allQuotes = quoteService.getAllQuotesOfAuthorWithRatingFromSource(author,source, rating);
+        }
+        if (!isEmpty(author) && !isEmpty(rating) && isEmpty(source)) {
             allQuotes = quoteService.getAllQuotesOfAuthorWithRating(author, rating);
         }
-        if (!isEmpty(author) && isEmpty(rating)) {
+        if (!isEmpty(author) && isEmpty(rating) && !isEmpty(source)) {
+            allQuotes = quoteService.getAllQuotesOfAuthorFromSource(author,source);
+        }
+        if (!isEmpty(author) && isEmpty(rating) && isEmpty(source)) {
             allQuotes = quoteService.getAllQuotesOfAuthor(author);
         }
-        if (isEmpty(author) && !isEmpty(rating)) {
+        if (isEmpty(author) && !isEmpty(rating) && !isEmpty(source)) {
+            allQuotes = quoteService.getAllQuotesFromSourceWithRating(source,rating);
+        }
+        if (isEmpty(author) && !isEmpty(rating) && isEmpty(source)) {
             allQuotes = quoteService.getAllQuotesWithRating(rating);
         }
-        if (isEmpty(author) && isEmpty(rating)) {
+        if (isEmpty(author) && isEmpty(rating) && !isEmpty(source)) {
+            allQuotes = quoteService.getAllQuotesFromSource(source);
+        }
+        if (isEmpty(author) && isEmpty(rating) && isEmpty(source)) {
             allQuotes = quoteService.getAllQuotes();
         }
 

@@ -33,8 +33,8 @@ public class QuoteRepositoryIntegrationTest {
 
     @Test
     public void whenFindAll_thenReturnQuotes_AndCheckSize() {
-        testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta", 0));
-        testEntityManager.persist(new Quote("KROKODAILUU!", "Luffy", 0));
+        testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta", "Movie",0));
+        testEntityManager.persist(new Quote("KROKODAILUU!", "Luffy", "Movie",0));
         testEntityManager.flush();
 
         List<Quote> found = (List<Quote>) quoteRepository.findAll();
@@ -49,6 +49,12 @@ public class QuoteRepositoryIntegrationTest {
     }
 
     @Test
+    public void whenFindAllBySource_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findBySource("Book");
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
     public void whenFindAllByRating_thenReturnQuotes_AndCheckSize() {
         List<Quote> found = quoteRepository.findByRating(1);
         assertThat(found.size(), is(1));
@@ -57,6 +63,24 @@ public class QuoteRepositoryIntegrationTest {
     @Test
     public void whenFindAllByAuthorAndRating_thenReturnQuotes_AndCheckSize() {
         List<Quote> found = quoteRepository.findByAuthorAndRating("Luffy",1);
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
+    public void whenFindAllByAuthorAndSource_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findByAuthorAndSource("Luffy","Movie");
+        assertThat(found.size(), is(3));
+    }
+
+    @Test
+    public void whenFindAllBySourceAndRating_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findBySourceAndRating("Movie",1);
+        assertThat(found.size(), is(1));
+    }
+
+    @Test
+    public void whenFindAllByAuthorAndRatingAndSource_thenReturnQuotes_AndCheckSize() {
+        List<Quote> found = quoteRepository.findByAuthorAndSourceAndRating("Luffy","Movie",1);
         assertThat(found.size(), is(1));
     }
 
@@ -81,7 +105,7 @@ public class QuoteRepositoryIntegrationTest {
 
     @Test
     public void whenPersist_thenGet_AndCheckQuoteName() {
-        Quote vegeta = testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta", 0));
+        Quote vegeta = testEntityManager.persist(new Quote("It's over KAKAROTTO!", "Vegeta","Movie", 0));
         testEntityManager.flush();
 
         Optional<Quote> found = quoteRepository.findById(vegeta.getId());

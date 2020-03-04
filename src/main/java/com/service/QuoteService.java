@@ -107,6 +107,16 @@ public class QuoteService {
     }
 
     /**
+     * Retrieves all quotes by given source.
+     *
+     * @param source Source of quotes.
+     * @return All quotes from given source.
+     */
+    public List<Quote> getAllQuotesFromSource(String source) {
+        return quoteRepository.findBySource(source);
+    }
+
+    /**
      * Retrieves all quotes with given rating.
      *
      * @param rating Rating of quotes.
@@ -125,5 +135,18 @@ public class QuoteService {
      */
     public List<Quote> getAllQuotesOfAuthorWithRating(String author, Integer rating) {
         return quoteRepository.findByAuthorAndRating(author,rating);
+    }
+
+    public List<Quote> getAllQuotesOfAuthorWithRatingFromSource(String author,
+                                                                String source, Integer rating) {
+        return quoteRepository.findByAuthorAndSourceAndRating(author,source,rating);
+    }
+
+    public List<Quote> getAllQuotesOfAuthorFromSource(String author, String source) {
+        return quoteRepository.findByAuthorAndSource(author,source);
+    }
+
+    public List<Quote> getAllQuotesFromSourceWithRating(String source, Integer rating) {
+        return quoteRepository.findBySourceAndRating(source,rating);
     }
 }

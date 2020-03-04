@@ -50,8 +50,8 @@ class QuoteControllerTest {
 	public void getAllQuotes() throws Exception {
 
 		ArrayList<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "da","Me",0));
-		allQuotes.add(new Quote(2, "bo","Him",25));
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Him","Movie",25));
 
 		when(quoteService.getAllQuotes()).thenReturn(allQuotes);
 		String uri = UriComponentsBuilder.newInstance().path("/quotes").build().toUriString();
@@ -60,6 +60,7 @@ class QuoteControllerTest {
 				.andExpect(status().isOk()).andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("2")))
 				.andExpect(content().string(containsString("Him")))
+				.andExpect(content().string(containsString("Movie")))
 				.andExpect(content().string(containsString("25")));
 	}
 
@@ -67,8 +68,8 @@ class QuoteControllerTest {
 	public void getAllQuotesByAuthor() throws Exception {
 
 		ArrayList<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "da","Me",0));
-		allQuotes.add(new Quote(2, "bo","Me",25));
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Me","Movie",25));
 
 		when(quoteService.getAllQuotesOfAuthor("Me")).thenReturn(allQuotes);
 
@@ -80,6 +81,7 @@ class QuoteControllerTest {
 				.andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("bo")))
 				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
 				.andExpect(content().string(containsString("25")));
 	}
 
@@ -87,8 +89,8 @@ class QuoteControllerTest {
 	public void getAllQuotesWithRating() throws Exception {
 
 		ArrayList<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "da","Me",0));
-		allQuotes.add(new Quote(2, "bo","Me",0));
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Me","Movie",0));
 
 		when(quoteService.getAllQuotesWithRating(0)).thenReturn(allQuotes);
 
@@ -100,6 +102,7 @@ class QuoteControllerTest {
 				.andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("bo")))
 				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
 				.andExpect(content().string(containsString("0")));
 	}
 
@@ -107,8 +110,8 @@ class QuoteControllerTest {
 	public void getAllQuotesOfAuthorWithRating() throws Exception {
 
 		ArrayList<Quote> allQuotes = new ArrayList<>();
-		allQuotes.add(new Quote(1, "da","Me",0));
-		allQuotes.add(new Quote(2, "bo","Me",0));
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Me","Movie",0));
 
 		when(quoteService.getAllQuotesOfAuthorWithRating("Me",0)).thenReturn(allQuotes);
 
@@ -120,6 +123,91 @@ class QuoteControllerTest {
 				.andExpect(content().string(containsString("da")))
 				.andExpect(content().string(containsString("bo")))
 				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
+				.andExpect(content().string(containsString("0")));
+	}
+
+	@Test
+	public void getAllQuotesOfAuthorWithRatingFromSource() throws Exception {
+
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Me","Movie",0));
+
+		when(quoteService.getAllQuotesOfAuthorWithRatingFromSource("Me","Movie",0)).thenReturn(allQuotes);
+
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").query("author={author}")
+				.query("source={source}").query("rating={rating}").buildAndExpand("Me","Movie","0").toUriString();
+
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("da")))
+				.andExpect(content().string(containsString("bo")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
+				.andExpect(content().string(containsString("0")));
+	}
+
+	@Test
+	public void getAllQuotesOfAuthorFromSource() throws Exception {
+
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Me","Movie",0));
+
+		when(quoteService.getAllQuotesOfAuthorFromSource("Me","Movie")).thenReturn(allQuotes);
+
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").query("author={author}")
+				.query("source={source}").buildAndExpand("Me","Movie").toUriString();
+
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("da")))
+				.andExpect(content().string(containsString("bo")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
+				.andExpect(content().string(containsString("0")));
+	}
+
+	@Test
+	public void getAllQuotesFromSourceWithRating() throws Exception {
+
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Me","Movie",0));
+
+		when(quoteService.getAllQuotesFromSourceWithRating("Movie",0)).thenReturn(allQuotes);
+
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").query("source={source}")
+				.query("rating={rating}").buildAndExpand("Movie","0").toUriString();
+
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("da")))
+				.andExpect(content().string(containsString("bo")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
+				.andExpect(content().string(containsString("0")));
+	}
+
+	@Test
+	public void getAllQuotesFromSource() throws Exception {
+
+		ArrayList<Quote> allQuotes = new ArrayList<>();
+		allQuotes.add(new Quote(1, "da","Me", "Movie",0));
+		allQuotes.add(new Quote(2, "bo","Me","Movie",0));
+
+		when(quoteService.getAllQuotesFromSource("Movie")).thenReturn(allQuotes);
+
+		String uri = UriComponentsBuilder.newInstance().path("/quotes").query("source={source}")
+				.buildAndExpand("Movie").toUriString();
+
+		mockMvc.perform(get(uri)).andDo(print()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("da")))
+				.andExpect(content().string(containsString("bo")))
+				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
 				.andExpect(content().string(containsString("0")));
 	}
 
@@ -127,7 +215,8 @@ class QuoteControllerTest {
 	public void getSingleQuote() throws Exception {
 		int id = 1;
 
-		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si","Me",0));
+		when(quoteService.getQuote(id)).thenReturn(new Quote(id, "si","Me",
+				"Movie",0));
 		String uri = UriComponentsBuilder.newInstance().path("/quotes/{id}")
 				.buildAndExpand(id).toUriString();
 
@@ -136,6 +225,7 @@ class QuoteControllerTest {
 				.andExpect(content().string(containsString("si")))
 				.andExpect(content().string(containsString("1")))
 				.andExpect(content().string(containsString("Me")))
+				.andExpect(content().string(containsString("Movie")))
 				.andExpect(content().string(containsString("0")))
 				.andReturn();
 
@@ -151,7 +241,7 @@ class QuoteControllerTest {
 
 	@Test
 	public void postQuoteTest() throws Exception {
-		Quote quote = new Quote(6, "baobab","Me",-3);
+		Quote quote = new Quote(6, "baobab","Me","Movie",-3);
 
 		Gson gson = new Gson();
 		String json = gson.toJson(quote);
