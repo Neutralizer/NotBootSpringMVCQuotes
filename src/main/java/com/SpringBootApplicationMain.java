@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class SpringBootApplicationMain {
@@ -16,6 +17,7 @@ public class SpringBootApplicationMain {
 
 
 	@Bean
+	@Profile("prod")
 	CommandLineRunner initData(QuoteRepository quoteRepository){
 		return args -> {
 			quoteRepository.save(new Quote(1,"It's over 9000!!!", "Vegeta","Movie",0));
