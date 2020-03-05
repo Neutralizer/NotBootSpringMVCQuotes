@@ -1,1 +1,0 @@
-insert into QUOTE values (10, 'Quote10', 'Author10','Rating10',10);

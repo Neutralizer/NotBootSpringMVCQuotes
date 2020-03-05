@@ -15,16 +15,15 @@ public class SpringBootApplicationMain {
 		SpringApplication.run(SpringBootApplicationMain.class, args);
 	}
 
-
-//	@Bean
-//	@Profile("dev")
-//	CommandLineRunner initData(QuoteRepository quoteRepository){
-//		return args -> {
-//			quoteRepository.save(new Quote(1,"It's over 9000!!!", "Vegeta","Movie",0));
-//			quoteRepository.save(new Quote(2,"I will defend my nakama!", "Luffy","Movie",0));
-//			quoteRepository.save(new Quote(3,"I smell meat!", "Luffy","Movie",1));
-//			quoteRepository.save(new Quote(4,"Omae wa mou shindeiru!","Kenshiro","Book",0));
-//			quoteRepository.save(new Quote(5,"I will be the pirate king!","Luffy","Movie",0));
-//		};
-//	}
+	@Profile("dev")
+	@Bean
+	CommandLineRunner initData(QuoteRepository quoteRepository){
+		return args -> {
+			quoteRepository.save(new Quote(1,"It's over 9000!!!", "Vegeta","Movie",0));
+			quoteRepository.save(new Quote(2,"I will defend my nakama!", "Luffy","Movie",0));
+			quoteRepository.save(new Quote(3,"I smell meat!", "Luffy","Movie",1));
+			quoteRepository.save(new Quote(4,"Omae wa mou shindeiru!","Kenshiro","Book",0));
+			quoteRepository.save(new Quote(5,"I will be the pirate king!","Luffy","Movie",0));
+		};
+	}
 }
