@@ -1,0 +1,8 @@
+CREATE TABLE QUOTE
+(
+ID int NOT NULL,
+QUOTE varchar(255),
+AUTHOR varchar(255),
+SOURCE varchar(255),
+RATING int
+);
