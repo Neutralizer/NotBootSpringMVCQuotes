@@ -15,7 +15,7 @@ public class SpringBootApplicationMain {
 		SpringApplication.run(SpringBootApplicationMain.class, args);
 	}
 
-//	@Profile("dev")
+	@Profile("dev")
 	@Bean
 	CommandLineRunner initData(QuoteRepository quoteRepository){
 		return args -> {
@@ -26,4 +26,5 @@ public class SpringBootApplicationMain {
 			quoteRepository.save(new Quote("I will be the pirate king!","Luffy","Movie",0));
 		};
 	}
+
 }
