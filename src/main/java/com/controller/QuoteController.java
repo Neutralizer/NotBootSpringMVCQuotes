@@ -140,7 +140,6 @@ public class QuoteController {
         LOG.info(response);
         LOG.debug(response);
         LOG.error(response);
-        System.out.println("ERROR TEST ERROR");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -148,7 +147,6 @@ public class QuoteController {
     @GetMapping(path = "/exception")
     public ResponseEntity error() {
         String errorResponse = "";
-        System.out.println("errorResponse TEST errorResponse");
         try {
             throw new Exception("Test exception");
         } catch (Exception e) {

@@ -33,6 +33,8 @@ services:
     expose:
       - "3306"
 
+  #5601 (Kibana web interface).
+  #9200 (Elasticsearch interface).
   elk:
     image: neutralizer-test/elk
     build:
@@ -41,42 +43,3 @@ services:
     ports:
       - "5601:5601"
       - "9200:9200"
-
-
-  #5601 (Kibana web interface).
-  #9200 (Elasticsearch JSON interface).
-  #5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the Forwarding logs with Filebeat section).
-  #The image also exposes Elasticsearch's transport interface on port 9300
-#  elk:
-#    image: sebp/elk
-#    ports:
-#      - "5601:5601"
-#      - "9200:9200"
-#      - "5044:5044"
-#
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.0
-#    ports:
-#      - "9200:9200"
-#    environment:
-#      - "xpack.security.enabled=false"
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:5.4.0
-#    ports:
-#      - "5601:5601"
-#    environment:
-#      - "xpack.security.enabled=false"
-#    depends_on:
-#      - elasticsearch
-#
-#  logstash:
-#    image: docker.elastic.co/logstash/logstash:5.4.0
-#    ports:
-#      - "25826:25826"
-#    volumes:
-#      - $PWD/elk-config:/elk-config
-#    command: logstash -f /elk-config/logstash-tcp-input.conf
-#    depends_on:
-#      - elasticsearch
