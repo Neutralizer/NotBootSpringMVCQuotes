@@ -36,7 +36,7 @@ services:
   #5601 (Kibana web interface).
   #9200 (Elasticsearch interface).
   elk:
-    image: neutralizer-test/elk
+    image: neutralizer-test/elasticsearch-logstash-kibana
     build:
       context: ./elk
       dockerfile: Dockerfile-elk
