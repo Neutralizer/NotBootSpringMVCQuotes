@@ -30,3 +30,4 @@ docker-compose up
 15) Added source field to entity 
 16) Added dev and prod profiles
 17) Added mysql database for prod profile. H2 is still used for dev profile
+18) Added ELK stack - elasticsearch, logstash, kibana and transferring logs via tcp (running elk requires command "sudo sysctl -w vm.max_map_count=262144")

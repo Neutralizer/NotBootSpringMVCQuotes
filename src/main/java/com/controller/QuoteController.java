@@ -2,14 +2,18 @@ package com.controller;
 
 import com.model.Quote;
 import com.service.QuoteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.util.StringUtils.isEmpty;
+import static org.springframework.util.StringUtils.sortStringArray;
 
 /**
  * Quote controller with basic CRUD operations.
@@ -19,6 +23,8 @@ import static org.springframework.util.StringUtils.isEmpty;
 
 @RestController
 public class QuoteController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(QuoteController.class.getName());
 
 
     private QuoteService quoteService;
@@ -48,19 +54,19 @@ public class QuoteController {
                                                  @RequestParam(required = false) Integer rating) {
         List<Quote> allQuotes = null;
         if (!isEmpty(author) && !isEmpty(rating) && !isEmpty(source)) {
-            allQuotes = quoteService.getAllQuotesOfAuthorWithRatingFromSource(author,source, rating);
+            allQuotes = quoteService.getAllQuotesOfAuthorWithRatingFromSource(author, source, rating);
         }
         if (!isEmpty(author) && !isEmpty(rating) && isEmpty(source)) {
             allQuotes = quoteService.getAllQuotesOfAuthorWithRating(author, rating);
         }
         if (!isEmpty(author) && isEmpty(rating) && !isEmpty(source)) {
-            allQuotes = quoteService.getAllQuotesOfAuthorFromSource(author,source);
+            allQuotes = quoteService.getAllQuotesOfAuthorFromSource(author, source);
         }
         if (!isEmpty(author) && isEmpty(rating) && isEmpty(source)) {
             allQuotes = quoteService.getAllQuotesOfAuthor(author);
         }
         if (isEmpty(author) && !isEmpty(rating) && !isEmpty(source)) {
-            allQuotes = quoteService.getAllQuotesFromSourceWithRating(source,rating);
+            allQuotes = quoteService.getAllQuotesFromSourceWithRating(source, rating);
         }
         if (isEmpty(author) && !isEmpty(rating) && isEmpty(source)) {
             allQuotes = quoteService.getAllQuotesWithRating(rating);
@@ -126,6 +132,30 @@ public class QuoteController {
         quoteService.removeRating(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/elk")
+    public ResponseEntity generateLog() {
+        String response = "Generating log " + new Date();
+        LOG.info(response);
+        LOG.debug(response);
+        LOG.error(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @GetMapping(path = "/exception")
+    public ResponseEntity error() {
+        String errorResponse = "";
+        try {
+            throw new Exception("Test exception");
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            LOG.error(String.valueOf(e));
+            errorResponse = e.toString();
+        }
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }
