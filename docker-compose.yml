@@ -2,7 +2,7 @@ version: '3'
 
 services:
   springboot-docker-compose-app-container:
-    image: neutralizer-test/quote-manipulator-dockerize-maven:1.0
+    image: neutralizer/quote-manipulator-dockerize-maven:1.0
     build:
       context: ./
       dockerfile: Dockerfile
@@ -36,7 +36,7 @@ services:
   #5601 (Kibana web interface).
   #9200 (Elasticsearch interface).
   elk:
-    image: neutralizer-test/elasticsearch-logstash-kibana
+    image: neutralizer/elasticsearch-logstash-kibana
     build:
       context: ./elk
       dockerfile: Dockerfile-elk
