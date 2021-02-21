@@ -42,6 +42,8 @@ public class QuoteController {
 
         quoteService.addQuote(quote);
 
+        LOG.info("Add quote" + quote.getQuote().toString());
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -78,6 +80,8 @@ public class QuoteController {
             allQuotes = quoteService.getAllQuotes();
         }
 
+        LOG.info("Getting " + allQuotes.size() + " quotes");
+
         return new ResponseEntity<>(allQuotes, HttpStatus.OK);
 
 
@@ -92,6 +96,8 @@ public class QuoteController {
 
         Quote quote = quoteService.getQuote(id);
 
+        LOG.info("Add quote" + quote.getQuote().toString());
+
         return new ResponseEntity<>(quote, HttpStatus.OK);
 
     }
@@ -103,6 +109,8 @@ public class QuoteController {
     public ResponseEntity deleteQuote(@PathVariable int id) {
 
         quoteService.remove(id);
+
+        LOG.info("Delete quote with id: " + id);
 
         return new ResponseEntity<>(HttpStatus.OK);
 
@@ -118,6 +126,8 @@ public class QuoteController {
     public ResponseEntity likeQuote(@PathVariable int id) {
         quoteService.addRating(id);
 
+        LOG.info("Add like to quote with id: " + id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -130,6 +140,8 @@ public class QuoteController {
     @PostMapping(path = "/quotes/{id}/dislike")
     public ResponseEntity dislikeQuote(@PathVariable int id) {
         quoteService.removeRating(id);
+
+        LOG.info("Remove like to quote with id: " + id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
